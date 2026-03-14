@@ -21,14 +21,13 @@
             overflow: hidden; transition: all 0.2s;
         }
         
-        /* LOGO STYLING */
+        /* LOGO STYLING - REVERTED TO ORIGINAL */
         .logo-tm {
             width: 120px;
             height: 120px;
             margin-bottom: 20px;
             filter: drop-shadow(0 0 15px rgba(0, 242, 255, 0.3));
             animation: logoFade 1.5s ease-out;
-            object-fit: contain;
         }
         @keyframes logoFade { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
 
@@ -44,6 +43,7 @@
         .letter { display: inline-block; font-size: clamp(28px, 8vw, 60px); font-weight: 900; color: white; opacity: 0; transform: translateY(-350px); position: relative; }
         .letter.active { opacity: 1; transform: translateY(0); transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s; }
 
+        /* EARTHQUAKE SHAKE EFFECT - RESTORED */
         .shake { animation: earthquake 0.3s infinite; }
         @keyframes earthquake { 0% { transform: translate(3px, 0px); } 25% { transform: translate(-3px, 2px); } 50% { transform: translate(3px, -2px); } 100% { transform: translate(-3px, 1px); } }
 
@@ -106,8 +106,7 @@
     </div>
 
     <header id="headerBg">
-        <img src="images/logo-trademark.png" alt="Excellent Institute Logo" class="logo-tm">
-        
+        <img src="https://i.ibb.co/C5mP1j0M/1000267708.png" alt="Excellent Institute Logo" class="logo-tm">
         <div class="name-wrapper" id="nameContainer"></div>
         <span class="tagline">EMPOWERING MINDS • ELEVATING CAREERS • SINCE 2026</span>
     </header>
@@ -115,41 +114,63 @@
     <div class="main-content">
         <div class="card">
             <div class="card-header">01. Foundation Tracks</div>
-            <div class="item" onclick="showPop('BCC (Basic)', '2 Months', 'Beginners', 'Digital Literacy', 'Windows 11, MS Word, Internet, Secure Emailing & Cyber Hygiene.')">
-                <div class="top-row"><span class="c-name">BCC (Basic)</span><span class="dur">2 MONTHS</span></div>
-                <span class="preview-text">Essential computing skills for daily life.</span>
+            <div class="item" onclick="showPop('Basic Computer Course (BCC)', '3 Months', 'Beginners & Students', 'Foundational Digital Literacy', 'Computer Fundamentals, Operating System Basics (Windows/Linux), MS Word, MS Excel, MS PowerPoint, Internet & Email, Cyber Safety & Security Basics, Introduction to Multimedia, Practical & Viva.\\n\\nCourse Fee: ₹1500 (Discount Price: ₹1200)')">
+                <div class="top-row"><span class="c-name">BCC</span><span class="dur">3 MONTHS</span></div>
+                <span class="preview-text">Essential computing, MS Office, and Internet skills.</span>
+                <div style="margin-top: 8px; font-size: 13px; font-weight: 800; color: #111827;">Fee: <span style="color: #94a3b8; text-decoration: line-through; margin-right: 4px;">₹1500</span><span style="color: var(--brand);">₹1200</span></div>
             </div>
-            <div class="item" onclick="showPop('CCA (Certificate)', '3 Months', 'Office Staff', 'Workflow Efficiency', 'Advanced MS Office, Hardware Basics, Professional Typing & Filing.')">
-                <div class="top-row"><span class="c-name">CCA</span><span class="dur">3 MONTHS</span></div>
-                <span class="preview-text">Focus on office productivity and speed.</span>
+            <div class="item" onclick="showPop('Course on Computer Concepts (CCC)', '3 Months', 'Beginners & General Public', 'Core Digital Literacy', 'Computer Fundamentals, Operating System Basics, Microsoft Word & Documentation, Microsoft Excel & Spreadsheet, Microsoft PowerPoint & Presentation Skills, Internet & Email Applications, Introduction to HTML & Web Basics, Introduction to Tally with GST, Practical & Viva.\\n\\nCourse Fee: ₹1500 (Discount Price: ₹1200)')">
+                <div class="top-row"><span class="c-name">CCC</span><span class="dur">3 MONTHS</span></div>
+                <span class="preview-text">Govt. standard digital literacy and basics.</span>
+                <div style="margin-top: 8px; font-size: 13px; font-weight: 800; color: #111827;">Fee: <span style="color: #94a3b8; text-decoration: line-through; margin-right: 4px;">₹1500</span><span style="color: var(--brand);">₹1200</span></div>
+            </div>
+            <div class="item" onclick="showPop('Certificate in MS Office (CMS)', '1 Month', 'Office Staff & Students', 'Data Entry & Office Efficiency', 'Computer Fundamentals, Advance Excel, Quick Filtering, Filtering by Multiple Criteria, Practical & Viva.\\n\\nCourse Fee: ₹600 (Discount Price: ₹500)')">
+                <div class="top-row"><span class="c-name">CMS</span><span class="dur">1 MONTH</span></div>
+                <span class="preview-text">Master Advanced Excel and computer fundamentals.</span>
+                <div style="margin-top: 8px; font-size: 13px; font-weight: 800; color: #111827;">Fee: <span style="color: #94a3b8; text-decoration: line-through; margin-right: 4px;">₹600</span><span style="color: var(--brand);">₹500</span></div>
+            </div>
+            <div class="item" onclick="showPop('Certificate in Computer Typing', '3 Months', 'Students & Data Entry Ops', 'Speed & Accuracy in Typing', 'English Typing - 45 WPM, Odia Typing - 40 WPM, Practical & Viva.\\n\\nCourse Fee: ₹1500 (Discount Price: ₹1200)')">
+                <div class="top-row"><span class="c-name">Computer Typing</span><span class="dur">3 MONTHS</span></div>
+                <span class="preview-text">Master English (45 WPM) and Odia (40 WPM) typing.</span>
+                <div style="margin-top: 8px; font-size: 13px; font-weight: 800; color: #111827;">Fee: <span style="color: #94a3b8; text-decoration: line-through; margin-right: 4px;">₹1500</span><span style="color: var(--brand);">₹1200</span></div>
             </div>
         </div>
 
         <div class="card">
             <div class="card-header">02. Professional Diplomas</div>
-            <div class="item" onclick="showPop('DCA (Diploma)', '6 Months', 'Data Entry Ops', 'Govt Job Ready', 'Tally Prime, MS Office 2024, Photoshop & IT Management Tools.')">
+            <div class="item" onclick="showPop('Diploma in Computer Application', '6 Months', 'Job Seekers & Office Staff', 'Comprehensive Office & Digital Mastery', 'Basics of Computer, Windows Operating System, MS Office (Word, Excel, PowerPoint), Internet & Email Usage, Digital Services (CSC, Forms, Aadhar, PAN, Bill), Photoshop & Image Editing, Graphics Designing (Posters, Cards, Invitations), Tally with GST (Basic Accounting), Practical Work (Real Use + Viva).\\n\\nCourse Fee: ₹3500 (Discount Price: ₹3000)')">
                 <div class="top-row"><span class="c-name">DCA</span><span class="dur">6 MONTHS</span></div>
-                <span class="preview-text">Tally Prime and Office automation diploma.</span>
+                <span class="preview-text">MS Office, Digital Services, Design, and Tally GST.</span>
+                <div style="margin-top: 8px; font-size: 13px; font-weight: 800; color: #111827;">Fee: <span style="color: #94a3b8; text-decoration: line-through; margin-right: 4px;">₹3500</span><span style="color: var(--brand);">₹3000</span></div>
             </div>
-            <div class="item" onclick="showPop('ADCA (Advance)', '12 Months', 'IT Professionals', 'Full Stack Foundation', 'Web Design (HTML/CSS), C Programming, DTP, Tally & DCA Suite.')">
-                <div class="top-row"><span class="c-name">ADCA</span><span class="dur">12 MONTHS</span></div>
-                <span class="preview-text">Advanced web design and coding diploma.</span>
+            <div class="item" onclick="showPop('Post Graduate Diploma in Computer Application', '12 Months', 'Graduates & Tech Professionals', 'Advanced Programming & Management', 'Computer Fundamentals & Operating Systems, Programming in C & Data Structures, Database Management System (DBMS) with SQL, Web Designing using HTML, CSS & JavaScript, Object Oriented Programming using Java, Software Engineering & Project Management, Python Programming with Data Analysis Basics, Tally ERP with GST, Practical & Viva (Covering All Technologies).\\n\\nCourse Fee: ₹7000 (Discount Price: ₹6000)')">
+                <div class="top-row"><span class="c-name">PGDCA</span><span class="dur">12 MONTHS</span></div>
+                <span class="preview-text">Advanced software engineering, programming, and databases.</span>
+                <div style="margin-top: 8px; font-size: 13px; font-weight: 800; color: #111827;">Fee: <span style="color: #94a3b8; text-decoration: line-through; margin-right: 4px;">₹7000</span><span style="color: var(--brand);">₹6000</span></div>
+            </div>
+            <div class="item" onclick="showPop('Diploma in Web Development', '12 Months', 'Aspiring Web Developers', 'Full Stack Web Mastery', 'HTML & CSS Fundamentals, JavaScript Programming, Responsive Web Design (Bootstrap), Frontend Framework: React.js, Backend Development with Node.js, Database Management with MongoDB & MySQL, Web Hosting & Deployment, Version Control with Git & GitHub, Practical & Viva.\\n\\nCourse Fee: ₹7000 (Discount Price: ₹6000)')">
+                <div class="top-row"><span class="c-name">Web Development</span><span class="dur">12 MONTHS</span></div>
+                <span class="preview-text">Master HTML, React, Node.js, and Databases.</span>
+                <div style="margin-top: 8px; font-size: 13px; font-weight: 800; color: #111827;">Fee: <span style="color: #94a3b8; text-decoration: line-through; margin-right: 4px;">₹7000</span><span style="color: var(--brand);">₹6000</span></div>
             </div>
         </div>
 
         <div class="card">
             <div class="card-header">03. Specialized Programs</div>
-            <div class="item" onclick="showPop('Data Analytics', '6 Months', 'Analysts', 'Business Insight', 'Excel Mastery, SQL Basics, Power BI & Data Visualization.')">
-                <div class="top-row"><span class="c-name">Data Analytics</span><span class="dur">6 MONTHS</span></div>
-                <span class="preview-text">Analyze data and build visual dashboards.</span>
-            </div>
-            <div class="item" onclick="showPop('Graphic Design', '6 Months', 'Creatives', 'Brand Identity', 'Photoshop, CorelDraw, Illustrator & Brand Identity Design.')">
-                <div class="top-row"><span class="c-name">Graphic Design</span><span class="dur">6 MONTHS</span></div>
+            <div class="item" onclick="showPop('Certificate in Graphic Design', '3 Months', 'Creatives & Marketers', 'Brand Identity Creation', 'Introduction to Graphic Design, Adobe Photoshop Basics, Adobe Illustrator, CorelDRAW Techniques, Typography & Color Theory, Layout Design & Digital Publishing, Logo, Banner & Poster Designing, Design for Social Media Platforms, Practical + Viva.\\n\\nCourse Fee: ₹1800 (Discount Price: ₹1500)')">
+                <div class="top-row"><span class="c-name">Graphic Design</span><span class="dur">3 MONTHS</span></div>
                 <span class="preview-text">Master Adobe Creative Suite and CorelDraw.</span>
+                <div style="margin-top: 8px; font-size: 13px; font-weight: 800; color: #111827;">Fee: <span style="color: #94a3b8; text-decoration: line-through; margin-right: 4px;">₹1800</span><span style="color: var(--brand);">₹1500</span></div>
             </div>
-            <div class="item" onclick="showPop('NIELIT O-Level', '1 Year', 'Govt Aspirants', 'National Standard', 'Python Programming, IoT, Web Design & M1-M4 Modules.')">
-                <div class="top-row"><span class="c-name">O-Level</span><span class="dur">1 YEAR</span></div>
-                <span class="preview-text">National standard: Python and IoT syllabus.</span>
+            <div class="item" onclick="showPop('Certificate in Tally', '6 Months', 'Accounting Professionals', 'Financial & Inventory Management', 'Introduction to Accounting, Basics of Tally, Company Creation & Ledger Management, Voucher Entry in Tally, Inventory Management, Taxation in Tally (GST, TDS, TCS), Payroll & Employee Records, Banking Features in Tally, Project and viva.\\n\\nCourse Fee: ₹3500 (Discount Price: ₹3000)')">
+                <div class="top-row"><span class="c-name">Tally</span><span class="dur">6 MONTHS</span></div>
+                <span class="preview-text">Master Tally ERP, GST, Payroll, and Accounting.</span>
+                <div style="margin-top: 8px; font-size: 13px; font-weight: 800; color: #111827;">Fee: <span style="color: #94a3b8; text-decoration: line-through; margin-right: 4px;">₹3500</span><span style="color: var(--brand);">₹3000</span></div>
+            </div>
+            <div class="item" onclick="showPop('Core Java', '3 Months', 'Software Aspirants', 'Backend Dev Foundation', 'Introduction to Java Programming, Object-Oriented Programming in Java, Java Control Structures & Arrays, Classes, Objects and Methods, Inheritance and Polymorphism in Java, Exception Handling and File I/O, Packages and Interfaces in Java, Java Collections and Wrapper Classes, Practical & Viva.\\n\\nCourse Fee: ₹2000 (Discount Price: ₹1500)')">
+                <div class="top-row"><span class="c-name">Core Java</span><span class="dur">3 MONTHS</span></div>
+                <span class="preview-text">Learn OOPs, logic, and core Java concepts.</span>
+                <div style="margin-top: 8px; font-size: 13px; font-weight: 800; color: #111827;">Fee: <span style="color: #94a3b8; text-decoration: line-through; margin-right: 4px;">₹2000</span><span style="color: var(--brand);">₹1500</span></div>
             </div>
         </div>
     </div>
@@ -172,7 +193,7 @@
                     </div>
                 </div>
                 <div class="info-label">Curriculum Details</div>
-                <div class="curriculum-box" id="pLearn"></div>
+                <div class="curriculum-box" id="pLearn" style="white-space: pre-wrap;"></div>
                 <button class="close-btn" onclick="document.getElementById('pModal').style.display='none'">DISMISS</button>
             </div>
         </div>
@@ -204,7 +225,7 @@
                 span.className = 'letter';
                 if(char === ' ') span.style.width = "15px";
                 
-                // Survivor logic: Targeting indices 14 and 15 specifically
+                // Survivor logic: Targeting indices 14 and 15 specifically (I and T in INSTITUTE)
                 if(i === 14) span.id = "survivor-i"; 
                 if(i === 15) span.id = "survivor-t"; 
                 
