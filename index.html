@@ -59,6 +59,61 @@
         .tagline { display: block; margin-top: 25px; color: var(--neon); letter-spacing: 4px; font-size: clamp(10px, 2vw, 14px); font-weight: 800; text-transform: uppercase; animation: tubeLight 4.5s infinite; }
         @keyframes tubeLight { 0%, 15%, 20%, 25%, 50%, 100% { opacity: 1; text-shadow: 0 0 12px var(--neon); } 18%, 22%, 52% { opacity: 0.1; text-shadow: none; } }
 
+        /* TRAIN TICKER MARQUEE */
+        .ticker-container {
+            width: 100%;
+            background: #060b14;
+            border-bottom: 2px dashed #334155;
+            overflow: hidden;
+            display: flex;
+            white-space: nowrap;
+            padding: 12px 0;
+            position: relative;
+            z-index: 10;
+        }
+        .ticker-track {
+            display: flex;
+            align-items: center;
+            animation: moveTrain 30s linear infinite;
+        }
+        .ticker-track:hover {
+            animation-play-state: paused;
+            cursor: default;
+        }
+        .train-msg {
+            display: flex;
+            align-items: center;
+            padding-right: 50px; 
+        }
+        .highlight-text {
+            color: var(--neon);
+            font-weight: 900;
+            font-size: 15px;
+            margin: 0 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .train-car {
+            background: white;
+            color: var(--navy);
+            padding: 5px 14px;
+            border-radius: 6px;
+            border-bottom: 3px solid var(--brand);
+            font-weight: 900;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        .train-link {
+            color: #475569;
+            font-size: 16px;
+            margin: 0 2px;
+            font-weight: bold;
+        }
+        @keyframes moveTrain {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
         /* 3D COURSE BOXES & LAYOUT */
         .main-content { padding: 40px 20px; display: flex; flex-direction: column; gap: 30px; max-width: 1200px; margin: 0 auto; perspective: 1000px; position: relative; z-index: 2; }
         @media (min-width: 992px) { .main-content { flex-direction: row; justify-content: center; align-items: stretch; } }
@@ -110,6 +165,39 @@
         <div class="name-wrapper" id="nameContainer"></div>
         <span class="tagline">EMPOWERING MINDS • ELEVATING CAREERS • SINCE 2026</span>
     </header>
+
+    <div class="ticker-container">
+        <div class="ticker-track">
+            <div class="train-msg">
+                <span style="font-size: 24px;">🚂</span>
+                <span class="highlight-text">📢 ADMISSIONS OPEN FOR 8TH & ABOVE STUDENTS!</span>
+                <span class="train-car">BCC</span><span class="train-link">▬</span>
+                <span class="train-car">CCC</span><span class="train-link">▬</span>
+                <span class="train-car">CMS</span><span class="train-link">▬</span>
+                <span class="train-car">Computer Typing</span><span class="train-link">▬</span>
+                <span class="train-car">DCA</span><span class="train-link">▬</span>
+                <span class="train-car">PGDCA</span><span class="train-link">▬</span>
+                <span class="train-car">Web Development</span><span class="train-link">▬</span>
+                <span class="train-car">Graphic Design</span><span class="train-link">▬</span>
+                <span class="train-car">Tally</span><span class="train-link">▬</span>
+                <span class="train-car">Core Java</span> 🚃
+            </div>
+            <div class="train-msg">
+                <span style="font-size: 24px;">🚂</span>
+                <span class="highlight-text">📢 ADMISSIONS OPEN FOR 8TH & ABOVE STUDENTS!</span>
+                <span class="train-car">BCC</span><span class="train-link">▬</span>
+                <span class="train-car">CCC</span><span class="train-link">▬</span>
+                <span class="train-car">CMS</span><span class="train-link">▬</span>
+                <span class="train-car">Computer Typing</span><span class="train-link">▬</span>
+                <span class="train-car">DCA</span><span class="train-link">▬</span>
+                <span class="train-car">PGDCA</span><span class="train-link">▬</span>
+                <span class="train-car">Web Development</span><span class="train-link">▬</span>
+                <span class="train-car">Graphic Design</span><span class="train-link">▬</span>
+                <span class="train-car">Tally</span><span class="train-link">▬</span>
+                <span class="train-car">Core Java</span> 🚃
+            </div>
+        </div>
+    </div>
 
     <div class="main-content">
         <div class="card">
@@ -203,7 +291,7 @@
         <div>
             <h3 style="color:var(--neon); margin:0; font-size: 18px;">📍 Visit Campus</h3>
             <p style="margin: 8px 0; font-size: 14px; opacity: 0.8;">Teachers Colony, Rear Side of SBI Bank, Surada</p>
-            <a href="https://maps.app.goo.gl/6dxUy4a4xiaiNwgy9" target="_blank" class="map-btn">NAVIGATE TO CAMPUS</a>
+            <a href="https://maps.app.goo.gl/EwfJjWYEYPiZeLZk6" target="_blank" class="map-btn">NAVIGATE TO CAMPUS</a>
         </div>
         <div style="text-align: left;">
             <h3 style="color:var(--neon); margin:0; font-size: 18px;">📞 Contact Us</h3>
