@@ -19,6 +19,39 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
 }
 
 // ==========================================================================
+// 🖥️ SINGLE PAGE APPLICATION (SPA) NAVIGATION LOGIC
+// Switches between Home, Courses, About, and Portal without reloading
+// ==========================================================================
+function switchPage(pageId) {
+    // 1. Hide all pages
+    const pages = document.querySelectorAll('.page-view');
+    pages.forEach(page => {
+        page.classList.remove('active');
+        page.classList.add('hidden');
+    });
+
+    // 2. Remove active state from all desktop nav buttons
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(btn => btn.classList.remove('active'));
+
+    // 3. Show the requested page
+    const activePage = document.getElementById(`view-${pageId}`);
+    if (activePage) {
+        activePage.classList.remove('hidden');
+        activePage.classList.add('active');
+    }
+
+    // 4. Highlight the active nav button (if it's not the portal button)
+    const activeBtn = document.getElementById(`nav-${pageId}`);
+    if (activeBtn && pageId !== 'portal') {
+        activeBtn.classList.add('active');
+    }
+
+    // 5. Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ==========================================================================
 // 📱 MOBILE NAVIGATION TOGGLE
 // ==========================================================================
 function toggleMobileNav() {
@@ -96,7 +129,7 @@ async function submitPublicRegistration(event) {
 
     try {
         // Pushes the data to a secure node in your database called 'public_registrations'
-        // This keeps it separate from your actual active student list until you manually approve them
+        // This keeps it separate from your actual active student list until you manually approve them in the Admin ERP
         await firebase.database().ref('public_registrations').push(newRegistration);
         
         // Show success UI
