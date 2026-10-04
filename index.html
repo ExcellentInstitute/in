@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Excellent Institute | The Elite Tech Mission</title>
     
+    <link rel="icon" type="image/jpeg" sizes="any" href="logo.jpeg">
+
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,7 +14,7 @@
     <!-- External CSS -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Firebase SDKs (Required for Registration & Data Removal) -->
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 </head>
@@ -30,241 +32,287 @@
         <span class="float-emoji" style="top:15%; right:40%;">💡</span>
     </div>
 
-    <!-- STICKY NAVIGATION BAR -->
+    <!-- PREMIUM TAB NAVIGATION -->
     <nav class="navbar">
-        <div class="nav-brand">Excellent Institute</div>
+        <div class="nav-brand">
+            <img src="logo.jpeg" alt="Excellent Institute Logo" class="nav-logo">
+            Excellent Institute
+        </div>
         <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#courses">Courses</a>
-            <a href="#about">About</a>
-            <a href="#app">Our App</a>
-            <a href="#register" class="nav-btn-highlight">Register Now</a>
+            <button onclick="switchPage('home')" class="nav-item active" id="nav-home">Home</button>
+            <button onclick="switchPage('courses')" class="nav-item" id="nav-courses">Courses</button>
+            <button onclick="switchPage('about')" class="nav-item" id="nav-about">About & Team</button>
+            <button onclick="switchPage('portal')" class="nav-btn-highlight" id="nav-portal">Student Portal</button>
         </div>
         <button class="mobile-menu-btn" onclick="toggleMobileNav()"><i class="fa-solid fa-bars"></i></button>
     </nav>
+
+    <!-- MOBILE NAVIGATION -->
     <div class="mobile-nav" id="mobileNav">
-        <a href="#home" onclick="toggleMobileNav()">Home</a>
-        <a href="#courses" onclick="toggleMobileNav()">Courses</a>
-        <a href="#about" onclick="toggleMobileNav()">About</a>
-        <a href="#app" onclick="toggleMobileNav()">Our App</a>
-        <a href="#register" onclick="toggleMobileNav()">Register Now</a>
-        <a href="#privacy" onclick="toggleMobileNav()">Policies</a>
+        <button onclick="switchPage('home'); toggleMobileNav()">Home</button>
+        <button onclick="switchPage('courses'); toggleMobileNav()">Courses</button>
+        <button onclick="switchPage('about'); toggleMobileNav()">About & Team</button>
+        <button onclick="switchPage('portal'); toggleMobileNav()">Student Portal</button>
     </div>
 
-    <!-- 01. HOME & HERO SECTION -->
-    <section id="home" class="page-section">
-        <header id="headerBg">
-            <img src="images/logo-trademark.png" alt="Excellent Institute Logo" class="logo-tm">
-            <div class="name-wrapper" id="nameContainer"></div>
-            <span class="tagline">EMPOWERING MINDS • ELEVATING CAREERS • SINCE 2026</span>
-        </header>
+    <!-- ========================================== -->
+    <!-- TAB 1: HOME PAGE                           -->
+    <!-- ========================================== -->
+    <div id="view-home" class="page-view active">
+        <section class="page-section">
+            <header id="headerBg">
+                <img src="logo.jpeg" alt="Excellent Institute Logo" class="logo-tm">
+                <div class="name-wrapper" id="nameContainer"></div>
+                <span class="tagline">EMPOWERING MINDS • ELEVATING CAREERS • SINCE 2026</span>
+            </header>
 
-        <div class="ticker-container">
-            <div class="ticker-track">
-                <div class="train-msg">
-                    <span style="font-size: 24px;">🚂</span>
-                    <span class="highlight-text">📢 ADMISSIONS OPEN FOR 8TH & ABOVE STUDENTS!</span>
-                    <span class="train-car">BCC</span><span class="train-link">▬</span>
-                    <span class="train-car">CCC</span><span class="train-link">▬</span>
-                    <span class="train-car">CMS</span><span class="train-link">▬</span>
-                    <span class="train-car">Computer Typing</span><span class="train-link">▬</span>
-                    <span class="train-car">DCA</span><span class="train-link">▬</span>
-                    <span class="train-car">PGDCA</span><span class="train-link">▬</span>
-                    <span class="train-car">Web Development</span><span class="train-link">▬</span>
-                    <span class="train-car">Graphic Design</span><span class="train-link">▬</span>
-                    <span class="train-car">Tally</span><span class="train-link">▬</span>
-                    <span class="train-car">Core Java</span> 🚃
-                </div>
-                <div class="train-msg">
-                    <span style="font-size: 24px;">🚂</span>
-                    <span class="highlight-text">📢 ADMISSIONS OPEN FOR 8TH & ABOVE STUDENTS!</span>
-                    <span class="train-car">BCC</span><span class="train-link">▬</span>
-                    <span class="train-car">CCC</span><span class="train-link">▬</span>
-                    <span class="train-car">CMS</span><span class="train-link">▬</span>
-                    <span class="train-car">Computer Typing</span><span class="train-link">▬</span>
-                    <span class="train-car">DCA</span><span class="train-link">▬</span>
-                    <span class="train-car">PGDCA</span><span class="train-link">▬</span>
-                    <span class="train-car">Web Development</span><span class="train-link">▬</span>
-                    <span class="train-car">Graphic Design</span><span class="train-link">▬</span>
-                    <span class="train-car">Tally</span><span class="train-link">▬</span>
-                    <span class="train-car">Core Java</span> 🚃
-                </div>
-            </div>
-        </div>
-
-        <!-- HORIZONTAL SCROLLING IMAGE GALLERY -->
-        <div class="gallery-wrapper">
-            <h3 class="section-subtitle text-center">Campus Highlights & Certifications</h3>
-            <div class="gallery-scroll-container">
-                <div class="gallery-track-inner">
-                    <!-- Note: Upload these images to your GitHub repository -->
-                    <img src="images/gallery1.jpg" alt="Student with Certificate" class="gallery-img">
-                    <img src="images/gallery2.jpg" alt="Computer Lab Session" class="gallery-img">
-                    <img src="images/gallery3.jpg" alt="Award Ceremony" class="gallery-img">
-                    <img src="images/gallery4.jpg" alt="Student Batch" class="gallery-img">
-                    <img src="images/gallery5.jpg" alt="Institute Event" class="gallery-img">
-                    <img src="images/gallery6.jpg" alt="Tech Setup" class="gallery-img">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 02. COURSES SECTION (Existing 3D Cards) -->
-    <section id="courses" class="page-section">
-        <h2 class="section-title text-center">Our Elite Programs</h2>
-        <div class="main-content">
-            <div class="card">
-                <div class="card-header">01. Foundation Tracks</div>
-                <div class="item" onclick="showPop('Basic Computer Course (BCC)', '3 Months', 'Beginners & Students', 'Foundational Digital Literacy', 'Computer Fundamentals|Operating System Basics (Windows/Linux)|MS Word|MS Excel|MS PowerPoint|Internet & Email|Cyber Safety & Security Basics|Introduction to Multimedia|Practical & Viva', '1700', '1500')">
-                    <div class="top-row"><span class="c-name">BCC</span><span class="dur">3 MONTHS</span></div>
-                    <span class="preview-text">Essential computing, MS Office, and Internet skills.</span>
-                    <div class="fee-display">Fee: <span class="fee-strike">₹1700</span><span class="fee-active">₹1500*</span></div>
-                </div>
-                <div class="item" onclick="showPop('Course on Computer Concepts (CCC)', '3 Months', 'Beginners & General Public', 'Core Digital Literacy', 'Computer Fundamentals|Operating System Basics|Microsoft Word & Documentation|Microsoft Excel & Spreadsheet|Microsoft PowerPoint & Presentation Skills|Internet & Email Applications|Introduction to HTML & Web Basics|Introduction to Tally with GST|Practical & Viva', '1700', '1500')">
-                    <div class="top-row"><span class="c-name">CCC</span><span class="dur">3 MONTHS</span></div>
-                    <span class="preview-text">Govt. standard digital literacy and basics.</span>
-                    <div class="fee-display">Fee: <span class="fee-strike">₹1700</span><span class="fee-active">₹1500*</span></div>
-                </div>
-                <div class="item" onclick="showPop('Certificate in MS Office (CMS)', '1 Month', 'Office Staff & Students', 'Data Entry & Office Efficiency', 'Computer Fundamentals|Advance Excel|Quick Filtering, Filtering by Multiple Criteria|Practical & Viva', '600', '500')">
-                    <div class="top-row"><span class="c-name">CMS</span><span class="dur">1 MONTH</span></div>
-                    <span class="preview-text">Master Advanced Excel and computer fundamentals.</span>
-                    <div class="fee-display">Fee: <span class="fee-strike">₹600</span><span class="fee-active">₹500*</span></div>
-                </div>
-                <div class="item" onclick="showPop('Certificate in Computer Typing', '3 Months', 'Students & Data Entry Ops', 'Speed & Accuracy in Typing', 'English Typing - 45 WPM|Odia Typing - 40 WPM|Practical & Viva', '1700', '1500')">
-                    <div class="top-row"><span class="c-name">Computer Typing</span><span class="dur">3 MONTHS</span></div>
-                    <span class="preview-text">Master English (45 WPM) and Odia (40 WPM) typing.</span>
-                    <div class="fee-display">Fee: <span class="fee-strike">₹1500</span><span class="fee-active">₹1200*</span></div>
+            <div class="ticker-container">
+                <div class="ticker-track">
+                    <div class="train-msg">
+                        <span style="font-size: 24px;">🚂</span>
+                        <span class="highlight-text">📢 ADMISSIONS OPEN FOR 8TH & ABOVE STUDENTS!</span>
+                        <span class="train-car">BCC</span><span class="train-link">▬</span>
+                        <span class="train-car">CCC</span><span class="train-link">▬</span>
+                        <span class="train-car">CMS</span><span class="train-link">▬</span>
+                        <span class="train-car">Computer Typing (Odia/Eng)</span><span class="train-link">▬</span>
+                        <span class="train-car">DCA</span><span class="train-link">▬</span>
+                        <span class="train-car">PGDCA</span><span class="train-link">▬</span>
+                        <span class="train-car">Web Development</span><span class="train-link">▬</span>
+                        <span class="train-car">Graphic Design</span><span class="train-link">▬</span>
+                        <span class="train-car">Tally</span><span class="train-link">▬</span>
+                        <span class="train-car">Core Java</span> 🚃
+                    </div>
+                    <div class="train-msg">
+                        <span style="font-size: 24px;">🚂</span>
+                        <span class="highlight-text">📢 ADMISSIONS OPEN FOR 8TH & ABOVE STUDENTS!</span>
+                        <span class="train-car">BCC</span><span class="train-link">▬</span>
+                        <span class="train-car">CCC</span><span class="train-link">▬</span>
+                        <span class="train-car">CMS</span><span class="train-link">▬</span>
+                        <span class="train-car">Computer Typing (Odia/Eng)</span><span class="train-link">▬</span>
+                        <span class="train-car">DCA</span><span class="train-link">▬</span>
+                        <span class="train-car">PGDCA</span><span class="train-link">▬</span>
+                        <span class="train-car">Web Development</span><span class="train-link">▬</span>
+                        <span class="train-car">Graphic Design</span><span class="train-link">▬</span>
+                        <span class="train-car">Tally</span><span class="train-link">▬</span>
+                        <span class="train-car">Core Java</span> 🚃
+                    </div>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-header">02. Professional Diplomas</div>
-                <div class="item" onclick="showPop('Diploma in Computer Application', '6 Months', 'Job Seekers & Office Staff', 'Comprehensive Office & Digital Mastery', 'Basics of Computer|Windows Operating System|MS Office (Word, Excel, PowerPoint)|Internet & Email Usage|Digital Services (CSC, Forms, Aadhar, PAN, Bill)|Photoshop & Image Editing|Graphics Designing (Posters, Cards, Invitations)|Tally with GST (Basic Accounting)|Practical Work (Real Use + Viva)', '3500', '3000')">
-                    <div class="top-row"><span class="c-name">DCA</span><span class="dur">6 MONTHS</span></div>
-                    <span class="preview-text">MS Office, Digital Services, Design, and Tally GST.</span>
-                    <div class="fee-display">Fee: <span class="fee-strike">₹3500</span><span class="fee-active">₹3000*</span></div>
+            <!-- INFINITE AUTO-SCROLLING GALLERY -->
+            <div class="marquee-gallery-wrapper">
+                <h3 class="section-subtitle text-center">Life at Excellent Institute</h3>
+                <div class="marquee-container">
+                    <div class="marquee-track-auto">
+                        <!-- SET 1 -->
+                        <img src="images/gallery1.jpg" alt="Student with Certificate" class="gallery-img">
+                        <img src="images/gallery2.jpg" alt="Computer Lab Session" class="gallery-img">
+                        <img src="images/gallery3.jpg" alt="Award Ceremony" class="gallery-img">
+                        <img src="images/gallery4.jpg" alt="Student Batch" class="gallery-img">
+                        <!-- SET 2 (Exact Duplicate for seamless infinite loop) -->
+                        <img src="images/gallery1.jpg" alt="Student with Certificate" class="gallery-img">
+                        <img src="images/gallery2.jpg" alt="Computer Lab Session" class="gallery-img">
+                        <img src="images/gallery3.jpg" alt="Award Ceremony" class="gallery-img">
+                        <img src="images/gallery4.jpg" alt="Student Batch" class="gallery-img">
+                    </div>
                 </div>
-                <div class="item" onclick="showPop('Post Graduate Diploma in Computer Application', '12 Months', 'Graduates & Tech Professionals', 'Advanced Programming & Management', 'Computer Fundamentals & Operating Systems|Programming in C & Data Structures|Database Management System (DBMS) with SQL|Web Designing using HTML, CSS & JavaScript|Object Oriented Programming using Java|Software Engineering & Project Management|Python Programming with Data Analysis Basics|Tally ERP with GST|Practical & Viva (Covering All Technologies)', '7000', '6000')">
-                    <div class="top-row"><span class="c-name">PGDCA</span><span class="dur">12 MONTHS</span></div>
-                    <span class="preview-text">Advanced software engineering, programming, and databases.</span>
-                    <div class="fee-display">Fee: <span class="fee-strike">₹7000</span><span class="fee-active">₹6000*</span></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: COURSES                             -->
+    <!-- ========================================== -->
+    <div id="view-courses" class="page-view hidden">
+        <section class="page-section">
+            <h2 class="section-title text-center">Our Elite Programs</h2>
+            <div class="main-content">
+                <div class="card">
+                    <div class="card-header">01. Foundation Tracks</div>
+                    <div class="item" onclick="showPop('Basic Computer Course (BCC)', '3 Months', 'Beginners & Students', 'Foundational Digital Literacy', 'Computer Fundamentals|Operating System Basics|MS Word|MS Excel|MS PowerPoint|Internet & Email|Practical & Viva', '1700', '1500')">
+                        <div class="top-row"><span class="c-name">BCC</span><span class="dur">3 MONTHS</span></div>
+                        <span class="preview-text">Essential computing, MS Office, and Internet skills.</span>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹1700</span><span class="fee-active">₹1500*</span></div>
+                    </div>
+                    <div class="item" onclick="showPop('Course on Computer Concepts (CCC)', '3 Months', 'Beginners & General Public', 'Core Digital Literacy', 'Computer Fundamentals|Operating System Basics|Microsoft Word, Excel & PowerPoint|Internet & Email|Intro to HTML & Web Basics|Practical & Viva', '1700', '1500')">
+                        <div class="top-row"><span class="c-name">CCC</span><span class="dur">3 MONTHS</span></div>
+                        <span class="preview-text">Govt. standard digital literacy and basics.</span>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹1700</span><span class="fee-active">₹1500*</span></div>
+                    </div>
+                    <div class="item" onclick="showPop('Certificate in Computer Typing', '3 Months', 'Students & Data Entry Ops', 'Speed & Accuracy in Typing', 'English Typing - 45 WPM|Odia Typing - 40 WPM|Practical & Viva', '1700', '1500')">
+                        <div class="top-row"><span class="c-name">Computer Typing</span><span class="dur">3 MONTHS</span></div>
+                        <span class="preview-text">Master English (45 WPM) and Odia (40 WPM) typing.</span>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹1500</span><span class="fee-active">₹1200*</span></div>
+                    </div>
                 </div>
-                <div class="item" onclick="showPop('Diploma in Web Development', '12 Months', 'Aspiring Web Developers', 'Full Stack Web Mastery', 'HTML & CSS Fundamentals|JavaScript Programming|Responsive Web Design (Bootstrap)|Frontend Framework: React.js|Backend Development with Node.js|Database Management with MongoDB & MySQL|Web Hosting & Deployment|Version Control with Git & GitHub|Practical & Viva', '7000', '6000')">
-                    <div class="top-row"><span class="c-name">Web Development</span><span class="dur">12 MONTHS</span></div>
-                    <span class="preview-text">Master HTML, React, Node.js, and Databases.</span>
-                    <div class="fee-display">Fee: <span class="fee-strike">₹7000</span><span class="fee-active">₹6000*</span></div>
+
+                <div class="card">
+                    <div class="card-header">02. Professional Diplomas</div>
+                    <div class="item" onclick="showPop('Diploma in Computer Application', '6 Months', 'Job Seekers & Office Staff', 'Comprehensive Office & Digital Mastery', 'Basics of Computer|Windows OS|MS Office|Digital Services|Photoshop & Image Editing|Tally with GST|Practical Work', '3500', '3000')">
+                        <div class="top-row"><span class="c-name">DCA</span><span class="dur">6 MONTHS</span></div>
+                        <span class="preview-text">MS Office, Digital Services, Design, and Tally GST.</span>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹3500</span><span class="fee-active">₹3000*</span></div>
+                    </div>
+                    <div class="item" onclick="showPop('Post Graduate Diploma in Computer Application', '12 Months', 'Graduates & Tech Professionals', 'Advanced Programming & Management', 'C & Data Structures|DBMS with SQL|Web Designing (HTML, CSS, JS)|Java OOP|Python Basics|Tally ERP with GST|Practical & Viva', '7000', '6000')">
+                        <div class="top-row"><span class="c-name">PGDCA</span><span class="dur">12 MONTHS</span></div>
+                        <span class="preview-text">Advanced software engineering, programming, and databases.</span>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹7000</span><span class="fee-active">₹6000*</span></div>
+                    </div>
+                    <div class="item" onclick="showPop('Diploma in Web Development', '12 Months', 'Aspiring Web Developers', 'Full Stack Web Mastery', 'HTML & CSS Fundamentals|JavaScript Programming|React.js|Backend with Node.js|MongoDB & MySQL|Git & GitHub|Practical & Viva', '7000', '6000')">
+                        <div class="top-row"><span class="c-name">Web Development</span><span class="dur">12 MONTHS</span></div>
+                        <span class="preview-text">Master HTML, React, Node.js, and Databases.</span>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹7000</span><span class="fee-active">₹6000*</span></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">03. Specialized Programs</div>
+                    <div class="item" onclick="showPop('Certificate in Graphic Design', '3 Months', 'Creatives & Marketers', 'Brand Identity Creation', 'Introduction to Graphic Design|Adobe Photoshop Basics|CorelDRAW Techniques|Typography & Color Theory|Layout Design|Practical + Viva', '1800', '1500')">
+                        <div class="top-row"><span class="c-name">Graphic Design</span><span class="dur">3 MONTHS</span></div>
+                        <span class="preview-text">Master Adobe Creative Suite and CorelDraw.</span>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹1800</span><span class="fee-active">₹1500*</span></div>
+                    </div>
+                    <div class="item" onclick="showPop('Certificate in Tally', '6 Months', 'Accounting Professionals', 'Financial & Inventory Management', 'Basics of Tally|Company Creation & Ledgers|Inventory Management|Taxation (GST, TDS)|Payroll & Employee Records|Project & Viva', '3500', '3000')">
+                        <div class="top-row"><span class="c-name">Tally</span><span class="dur">6 MONTHS</span></div>
+                        <span class="preview-text">Master Tally ERP, GST, Payroll, and Accounting.</span>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹3500</span><span class="fee-active">₹3000*</span></div>
+                    </div>
+                    <div class="item" onclick="showPop('Core Java', '3 Months', 'Software Aspirants', 'Backend Dev Foundation', 'Object-Oriented Programming|Java Control Structures|Classes & Methods|Inheritance & Polymorphism|Exception Handling|Practical & Viva', '2000', '1500')">
+                        <div class="top-row"><span class="c-name">Core Java</span><span class="dur">3 MONTHS</span></div>
+                        <span class="preview-text">Learn OOPs, logic, and core Java concepts.</span>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹2000</span><span class="fee-active">₹1500*</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: ABOUT & LEADERSHIP TEAM             -->
+    <!-- ========================================== -->
+    <div id="view-about" class="page-view hidden">
+        <section class="page-section bg-light">
+            <div class="content-container flex-col-md">
+                <div class="about-text">
+                    <h2 class="section-title text-left">About Excellent Institute</h2>
+                    <p class="about-desc">Located in the heart of Teachers Colony, Surada, Ganjam, Excellent Institute is a premier technology and vocational training center dedicated to bridging the digital divide. Our mission is to empower students and professionals with industry-standard computing skills through state-of-the-art infrastructure.</p>
+                    <ul class="about-highlights">
+                        <li><i class="fa-solid fa-check-circle"></i> Government Registered MSME (UDYAM-OD-11-0107511)</li>
+                        <li><i class="fa-solid fa-check-circle"></i> ISO 9001:2015 Certified Curriculum</li>
+                        <li><i class="fa-solid fa-check-circle"></i> Modern Lab with NComputing Infrastructure</li>
+                        <li><i class="fa-solid fa-check-circle"></i> Dedicated Placement & Job Desk Assistance</li>
+                    </ul>
+                </div>
+                <div class="about-image">
+                    <img src="logo.jpeg" alt="Excellent Institute Campus">
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-header">03. Specialized Programs</div>
-                <div class="item" onclick="showPop('Certificate in Graphic Design', '3 Months', 'Creatives & Marketers', 'Brand Identity Creation', 'Introduction to Graphic Design|Adobe Photoshop Basics|Adobe Illustrator|CorelDRAW Techniques|Typography & Color Theory|Layout Design & Digital Publishing|Logo, Banner & Poster Designing|Design for Social Media Platforms|Practical + Viva', '1800', '1500')">
-                    <div class="top-row"><span class="c-name">Graphic Design</span><span class="dur">3 MONTHS</span></div>
-                    <span class="preview-text">Master Adobe Creative Suite and CorelDraw.</span>
-                    <div class="fee-display">Fee: <span class="fee-strike">₹1800</span><span class="fee-active">₹1500*</span></div>
-                </div>
-                <div class="item" onclick="showPop('Certificate in Tally', '6 Months', 'Accounting Professionals', 'Financial & Inventory Management', 'Introduction to Accounting|Basics of Tally|Company Creation & Ledger Management|Voucher Entry in Tally|Inventory Management|Taxation in Tally (GST, TDS, TCS)|Payroll & Employee Records|Banking Features in Tally|Project and viva', '3500', '3000')">
-                    <div class="top-row"><span class="c-name">Tally</span><span class="dur">6 MONTHS</span></div>
-                    <span class="preview-text">Master Tally ERP, GST, Payroll, and Accounting.</span>
-                    <div class="fee-display">Fee: <span class="fee-strike">₹3500</span><span class="fee-active">₹3000*</span></div>
-                </div>
-                <div class="item" onclick="showPop('Core Java', '3 Months', 'Software Aspirants', 'Backend Dev Foundation', 'Introduction to Java Programming|Object-Oriented Programming in Java|Java Control Structures & Arrays|Classes, Objects and Methods|Inheritance and Polymorphism in Java|Exception Handling and File I/O|Packages and Interfaces in Java|Java Collections and Wrapper Classes|Practical & Viva', '2000', '1500')">
-                    <div class="top-row"><span class="c-name">Core Java</span><span class="dur">3 MONTHS</span></div>
-                    <span class="preview-text">Learn OOPs, logic, and core Java concepts.</span>
-                    <div class="fee-display">Fee: <span class="fee-strike">₹2000</span><span class="fee-active">₹1500*</span></div>
+            <!-- NEW: LEADERSHIP TEAM SECTION -->
+            <div class="team-wrapper mt-10">
+                <h2 class="section-title text-center">Meet the Core Team</h2>
+                <p class="text-center" style="color:var(--text); margin-bottom: 40px; font-weight:500;">The minds driving technological excellence and infrastructure at our institute.</p>
+                
+                <div class="team-grid">
+                    <!-- Partner 1 -->
+                    <div class="team-card">
+                        <div class="team-img-box"><img src="images/pradeep.jpg" onerror="this.src='https://ui-avatars.com/api/?name=Pradeep+Kumar&background=0041ff&color=fff'" alt="Pradeep Kumar Behera"></div>
+                        <h4>Pradeep Kumar Behera</h4>
+                        <span class="team-role">Founder & Managing Director</span>
+                        <p>Driving the strategic vision of Excellent Institute, focusing on accessible technology education, system administration, and modern operational management.</p>
+                    </div>
+                    <!-- Partner 2 -->
+                    <div class="team-card">
+                        <div class="team-img-box"><img src="images/anil.jpg" onerror="this.src='https://ui-avatars.com/api/?name=Anil+Gouda&background=0a0f1d&color=fff'" alt="Anil Gouda"></div>
+                        <h4>Anil Gouda</h4>
+                        <span class="team-role">Co-Founder & Technical Director</span>
+                        <p>Leading the institute's IT infrastructure, including advanced NComputing network deployments and seamless hardware lab operations.</p>
+                    </div>
+                    <!-- Partner 3 -->
+                    <div class="team-card">
+                        <div class="team-img-box"><img src="images/rajesh.jpg" onerror="this.src='https://ui-avatars.com/api/?name=Rajesh+Sahoo&background=00f2ff&color=fff'" alt="Rajesh Sahoo"></div>
+                        <h4>Rajesh Sahoo</h4>
+                        <span class="team-role">Co-Founder & Academic Lead</span>
+                        <p>Spearheading curriculum design and student success initiatives to ensure practical, industry-relevant training and seamless course delivery.</p>
+                    </div>
+                    <!-- Partner 4 -->
+                    <div class="team-card">
+                        <div class="team-img-box"><img src="images/partner4.jpg" onerror="this.src='https://ui-avatars.com/api/?name=Core+Partner&background=0041ff&color=fff'" alt="Core Team Member"></div>
+                        <h4>Core Team Member</h4>
+                        <span class="team-role">Co-Founder & Strategy Lead</span>
+                        <p>Overseeing student relations, digital communications, internal workflows, and institutional growth strategies.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="disclaimer text-center">
-            * Discounted fees are applicable strictly as per the institute's terms & conditions.
-        </div>
-    </section>
+        </section>
+    </div>
 
-    <!-- 03. ABOUT SECTION -->
-    <section id="about" class="page-section bg-light">
-        <div class="content-container flex-col-md">
-            <div class="about-text">
-                <h2 class="section-title text-left">About Excellent Institute</h2>
-                <p class="about-desc">Located in the heart of Teachers Colony, Surada, Ganjam, Excellent Institute is a premier technology and vocational training center dedicated to bridging the digital divide. Founded by Pradeep Kumar Behera, our mission is to empower students and professionals with industry-standard computing skills.</p>
-                <ul class="about-highlights">
-                    <li><i class="fa-solid fa-check-circle"></i> Government Registered (UDYAM-OD-11-0107511)</li>
-                    <li><i class="fa-solid fa-check-circle"></i> ISO 9001:2015 Certified Curriculum</li>
-                    <li><i class="fa-solid fa-check-circle"></i> Modern Lab with NComputing Infrastructure</li>
-                    <li><i class="fa-solid fa-check-circle"></i> Dedicated Placement & Job Desk Assistance</li>
-                </ul>
+    <!-- ========================================== -->
+    <!-- TAB 4: STUDENT PORTAL (Forms & App)        -->
+    <!-- ========================================== -->
+    <div id="view-portal" class="page-view hidden">
+        <section class="page-section bg-light">
+            <!-- APP PROMOTION -->
+            <div class="content-container flex-col-md reverse-mobile" style="margin-bottom: 60px;">
+                <div class="app-image text-center">
+                    <img src="images/app-mockup.png" alt="Computer Learning Hub Android App" class="mockup-img">
+                </div>
+                <div class="app-text">
+                    <h2 class="section-title text-left" style="margin-bottom: 20px;">Learn Anywhere, Anytime.</h2>
+                    <p class="about-desc">Take your classroom in your pocket. Download our official Android application, <strong>Computer Learning Hub</strong>, directly from the Google Play Store. Access exclusive study materials, track your attendance, pay tuition fees, and watch lecture shorts on the go.</p>
+                    <div class="app-buttons">
+                        <a href="#" class="play-store-btn">
+                            <i class="fa-brands fa-google-play"></i>
+                            <div class="btn-text">
+                                <span>GET IT ON</span>
+                                <strong>Google Play</strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="about-image">
-                <!-- Replace with your actual campus image -->
-                <img src="images/campus-front.jpg" alt="Excellent Institute Campus">
-            </div>
-        </div>
-    </section>
 
-    <!-- 04. OUR APP SECTION -->
-    <section id="app" class="page-section">
-        <div class="content-container flex-col-md reverse-mobile">
-            <div class="app-image text-center">
-                <img src="images/app-mockup.png" alt="Computer Learning Hub Android App" class="mockup-img">
-            </div>
-            <div class="app-text">
-                <h2 class="section-title text-left">Learn Anywhere, Anytime.</h2>
-                <p class="about-desc">Take your classroom in your pocket. Download our official Android application, <strong>Computer Learning Hub</strong>, directly from the Google Play Store. Access exclusive study materials, track your attendance, pay tuition fees, and watch lecture shorts on the go.</p>
-                <div class="app-buttons">
-                    <a href="#" class="play-store-btn">
-                        <i class="fa-brands fa-google-play"></i>
-                        <div class="btn-text">
-                            <span>GET IT ON</span>
-                            <strong>Google Play</strong>
+            <hr style="border: 1px solid #e2e8f0; margin-bottom: 60px;">
+
+            <!-- REGISTRATION FORM -->
+            <h2 class="section-title text-center">Apply for Admission</h2>
+            <div class="form-container">
+                <form id="public-reg-form" onsubmit="submitPublicRegistration(event)">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>Full Name *</label>
+                            <input type="text" id="reg-name" required placeholder="John Doe">
                         </div>
-                    </a>
-                </div>
+                        <div class="input-group">
+                            <label>Mobile Number *</label>
+                            <input type="tel" id="reg-phone" required placeholder="10-digit mobile number">
+                        </div>
+                        <div class="input-group">
+                            <label>Father's Name *</label>
+                            <input type="text" id="reg-father" required placeholder="Parent/Guardian Name">
+                        </div>
+                        <div class="input-group">
+                            <label>Desired Course *</label>
+                            <select id="reg-course" required>
+                                <option value="" disabled selected>Select a Course</option>
+                                <option value="BCC">BCC (3 Months)</option>
+                                <option value="CCC">CCC (3 Months)</option>
+                                <option value="DCA">DCA (6 Months)</option>
+                                <option value="PGDCA">PGDCA (12 Months)</option>
+                                <option value="Web Development">Web Development (12 Months)</option>
+                                <option value="Tally">Tally with GST (6 Months)</option>
+                                <option value="Graphic Design">Graphic Design (3 Months)</option>
+                                <option value="Computer Typing">Computer Typing (3 Months)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" id="reg-submit-btn" class="submit-btn">Submit Application</button>
+                    <p id="reg-success-msg" class="success-msg hidden">✅ Application submitted! We will contact you shortly.</p>
+                </form>
             </div>
-        </div>
-    </section>
 
-    <!-- 05. REGISTRATION FORM (Firebase Linked) -->
-    <section id="register" class="page-section bg-light">
-        <h2 class="section-title text-center">Apply for Admission</h2>
-        <div class="form-container">
-            <form id="public-reg-form" onsubmit="submitPublicRegistration(event)">
-                <div class="form-grid">
-                    <div class="input-group">
-                        <label>Full Name *</label>
-                        <input type="text" id="reg-name" required placeholder="John Doe">
-                    </div>
-                    <div class="input-group">
-                        <label>Mobile Number *</label>
-                        <input type="tel" id="reg-phone" required placeholder="10-digit mobile number">
-                    </div>
-                    <div class="input-group">
-                        <label>Father's Name *</label>
-                        <input type="text" id="reg-father" required placeholder="Parent/Guardian Name">
-                    </div>
-                    <div class="input-group">
-                        <label>Desired Course *</label>
-                        <select id="reg-course" required>
-                            <option value="" disabled selected>Select a Course</option>
-                            <option value="BCC">BCC (3 Months)</option>
-                            <option value="CCC">CCC (3 Months)</option>
-                            <option value="DCA">DCA (6 Months)</option>
-                            <option value="PGDCA">PGDCA (12 Months)</option>
-                            <option value="Web Development">Web Development (12 Months)</option>
-                            <option value="Tally">Tally with GST (6 Months)</option>
-                            <option value="Graphic Design">Graphic Design (3 Months)</option>
-                            <option value="Computer Typing">Computer Typing (3 Months)</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="submit" id="reg-submit-btn" class="submit-btn">Submit Application</button>
-                <p id="reg-success-msg" class="success-msg hidden">✅ Application submitted! We will contact you shortly.</p>
-            </form>
-        </div>
-    </section>
-
-    <!-- 06. POLICIES & DATA REMOVAL -->
-    <section id="privacy" class="page-section">
-        <div class="content-container">
-            <div class="policy-wrapper">
+            <!-- POLICIES & DATA REMOVAL -->
+            <div class="policy-wrapper mt-10">
                 <h2 class="section-title text-center">Policies & Data Management</h2>
                 
                 <div class="rules-box">
@@ -273,24 +321,28 @@
                         <li>Eligibility: Admissions are strictly open to students of 8th class and above.</li>
                         <li>Attendance: Minimum 75% attendance is required to sit for final certification exams.</li>
                         <li>Fees: All course fees must be cleared before the issuance of certificates. Discounted fees apply only on timely payments.</li>
-                        <li>Code of Conduct: Strict discipline is required in the NComputing lab. Any hardware damage will result in penalties.</li>
+                        <li>Code of Conduct: Strict discipline is required in the NComputing lab. Hardware damage will result in penalties.</li>
                     </ul>
                 </div>
 
                 <div class="data-removal-box">
                     <h3><i class="fa-solid fa-user-shield"></i> Personal Data Removal Request</h3>
-                    <p>Already registered? If you wish to delete your account, attendance logs, and personal data from our cloud servers and the mobile app, enter your registered phone number below.</p>
+                    <p>Already registered? If you wish to permanently delete your account, attendance logs, and personal data from our cloud servers and the mobile app, enter your registered phone number below.</p>
                     <form id="data-removal-form" onsubmit="submitDataRemoval(event)" class="removal-form">
-                        <input type="tel" id="remove-phone" placeholder="Enter Registered Mobile Number" required>
+                        <input type="tel" id="remove-phone" placeholder="Registered Mobile Number" required>
                         <button type="submit" id="remove-submit-btn">Request Deletion</button>
                     </form>
                     <p id="remove-success-msg" class="success-msg hidden">✅ Removal request received. Data will be purged within 48 hours.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
-    <!-- MODAL POPUP FOR COURSE DETAILS (Existing) -->
+    <!-- ========================================== -->
+    <!-- GLOBAL ELEMENTS (Footer & Modals)          -->
+    <!-- ========================================== -->
+
+    <!-- COURSE DETAILS MODAL -->
     <div class="modal" id="pModal" onclick="this.style.display='none'">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -319,13 +371,12 @@
                         <span class="modal-fee-disc" id="pFeeDisc"></span>
                     </div>
                 </div>
-
                 <button class="close-btn" onclick="document.getElementById('pModal').style.display='none'">DISMISS</button>
             </div>
         </div>
     </div>
 
-    <!-- FLOATING ACTION BUTTONS (Existing) -->
+    <!-- FLOATING ACTION BUTTONS -->
     <div class="fab-container">
         <div class="fab-bubble" id="callFab" onclick="toggleCallMenu(event)">
             <svg class="fab-icon call" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
@@ -340,7 +391,7 @@
         </a>
     </div>
 
-    <!-- 07. FOOTER & SOCIAL LINKS -->
+    <!-- FOOTER -->
     <footer>
         <div class="footer-col">
             <h3>📍 Visit Campus</h3>
@@ -351,9 +402,9 @@
         <div class="footer-col social-col text-right">
             <h3>🌐 Connect With Us</h3>
             <div class="social-links">
-                <a href="#" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-                <a href="#" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/excellent._.institute/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Excellent_Institute" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.facebook.com/Excellent.Institute01" target="_blank"><i class="fa-brands fa-facebook"></i></a>
             </div>
             <p><strong>Call us:</strong> <a href="tel:+918658219398">8658219398</a>, <a href="tel:+916371305069">6371305069</a></p>
         </div>
