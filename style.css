@@ -151,7 +151,7 @@ body {
 .page-section { padding: 120px 20px 60px 20px; position: relative; z-index: 2; }
 .bg-light { background-color: var(--white); }
 .section-title { text-align: center; font-size: clamp(24px, 5vw, 36px); font-weight: 900; color: var(--navy); margin-bottom: 30px; }
-.section-subtitle { font-size: clamp(18px, 4vw, 22px); font-weight: 800; color: var(--text); margin-bottom: 20px; }
+.section-subtitle { font-size: clamp(18px, 4vw, 22px); font-weight: 900; color: var(--text); margin-bottom: 20px; }
 
 header { 
     background: var(--navy); padding: 60px 20px; text-align: center; 
@@ -189,7 +189,7 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 .letter.it-hang { opacity: 1; transform: translateY(0); animation: dangle 1.8s ease-in-out infinite; transform-origin: top center; z-index: 100; color: white; }
 @keyframes dangle { 0%, 100% { transform: rotate(14deg); } 50% { transform: rotate(-14deg); } }
 
-.tagline { display: block; margin-top: 25px; color: var(--neon); letter-spacing: 3px; font-size: clamp(10px, 2.5vw, 14px); font-weight: 800; text-transform: uppercase; animation: tubeLight 4.5s infinite; }
+.tagline { display: block; margin-top: 25px; color: var(--neon); letter-spacing: 3px; font-size: clamp(10px, 2.5vw, 14px); font-weight: 900; text-transform: uppercase; animation: tubeLight 4.5s infinite; }
 @keyframes tubeLight { 0%, 15%, 20%, 25%, 50%, 100% { opacity: 1; text-shadow: 0 0 12px var(--neon); } 18%, 22%, 52% { opacity: 0.1; text-shadow: none; } }
 
 /* ==========================================================================
@@ -205,7 +205,7 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 .train-msg { display: flex; align-items: center; padding-right: 50px; }
 .highlight-text { color: var(--neon); font-weight: 900; font-size: 14px; margin: 0 15px; letter-spacing: 1px; text-transform: uppercase; }
 .train-car { background: white; color: var(--navy); padding: 5px 12px; border-radius: 6px; border-bottom: 3px solid var(--brand); font-weight: 900; font-size: 11px; text-transform: uppercase; }
-.train-link { color: #475569; font-size: 16px; margin: 0 2px; font-weight: bold; }
+.train-link { color: #475569; font-size: 16px; margin: 0 2px; font-weight: 900; }
 @keyframes moveTrain { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
 /* ==========================================================================
@@ -231,7 +231,7 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 }
 
 /* ==========================================================================
-   COURSES SECTION (3D CARDS)
+   COURSES SECTION (3D CARDS & FIXED FONT WEIGHTS)
    ========================================================================== */
 .main-content { display: grid; grid-template-columns: 1fr; gap: 30px; max-width: 1200px; margin: 0 auto; perspective: 1000px; }
 @media (min-width: 992px) { .main-content { grid-template-columns: repeat(3, 1fr); } }
@@ -247,12 +247,12 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 .item { padding: 20px; border-bottom: 1px solid #f1f5f9; cursor: pointer; transition: 0.3s; }
 .item:hover { background: #f0f7ff; padding-left: 28px; }
 .top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;}
-.c-name { font-weight: 800; color: #111827; font-size: clamp(16px, 2vw, 18px); line-height: 1.2;}
-.dur { background: var(--brand); color: white; font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: 800; white-space: nowrap;}
-.preview-text { font-size: 13px; color: #64748b; margin-top: 8px; line-height: 1.5; display: block; }
-.fee-display { margin-top: 10px; font-size: 14px; font-weight: 800; color: #111827; }
-.fee-strike { color: #94a3b8; text-decoration: line-through; margin-right: 6px; }
-.fee-active { color: var(--brand); }
+.c-name { font-weight: 900; color: #111827; font-size: clamp(16px, 2vw, 18px); line-height: 1.2;}
+.dur { background: var(--brand); color: white; font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: 900; white-space: nowrap;}
+.preview-text { font-size: 13px; font-weight: 600; color: #64748b; margin-top: 8px; line-height: 1.5; display: block; }
+.fee-display { margin-top: 10px; font-size: 14px; font-weight: 900; color: #111827; }
+.fee-strike { color: #94a3b8; text-decoration: line-through; margin-right: 6px; font-weight: 700; }
+.fee-active { color: var(--brand); font-weight: 900; }
 
 /* ==========================================================================
    FLEXIBLE CONTENT CONTAINERS (About & App)
@@ -268,32 +268,80 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 .about-image img, .mockup-img { width: 100%; max-width: 400px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover;}
 .mockup-img { background: transparent; box-shadow: none; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15)); }
 
-.about-desc { font-size: clamp(14px, 2vw, 16px); line-height: 1.8; color: var(--text); margin-bottom: 25px; }
+.about-desc { font-size: clamp(14px, 2vw, 16px); line-height: 1.8; font-weight: 600; color: var(--text); margin-bottom: 25px; }
 .about-highlights { list-style: none; display: flex; flex-direction: column; gap: 15px; }
 .about-highlights li { font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 10px; font-size: clamp(13px, 2vw, 15px);}
 .about-highlights i { color: var(--brand); font-size: 20px; }
 
 /* ==========================================================================
-   LEADERSHIP TEAM PROFILES (Grid Layout)
+   LEADERSHIP TEAM PROFILES (3D Flip Animation)
    ========================================================================== */
 .team-wrapper { max-width: 1200px; margin: 60px auto 0; }
-.team-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-    gap: 30px; 
-    padding: 20px; 
-}
+.team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; padding: 20px; }
 .team-card { 
     background: white; padding: 30px 20px; border-radius: 20px; text-align: center; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; 
     border-bottom: 5px solid transparent; 
 }
 .team-card:hover { transform: translateY(-10px); border-bottom-color: var(--brand); box-shadow: 0 20px 40px rgba(0,65,255,0.1); }
-.team-img-box { display: flex; justify-content: center; margin-bottom: 15px; }
-.team-img-box img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--light-bg); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+/* 3D Flip Avatar setup */
+.flip-avatar {
+    width: 120px;
+    height: 120px;
+    perspective: 1000px;
+    margin: 0 auto 15px;
+}
+.flip-avatar-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+    animation: flipCycle 16s infinite;
+}
+.flip-avatar-front, .flip-avatar-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 50%;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border: 4px solid var(--light-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: 900;
+    color: white;
+    overflow: hidden;
+}
+.flip-avatar-back {
+    transform: rotateY(180deg);
+}
+.flip-avatar-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 16 Second Total Cycle. Each person gets 4 seconds in the spotlight */
+@keyframes flipCycle {
+    0%, 5% { transform: rotateY(0deg); }
+    10%, 25% { transform: rotateY(180deg); } /* Flipped showing photo */
+    30%, 100% { transform: rotateY(0deg); } /* Back to initials */
+}
+
+/* Stagger the animations 4 seconds apart */
+.member-1 .flip-avatar-inner { animation-delay: 0s; }
+.member-2 .flip-avatar-inner { animation-delay: 4s; }
+.member-3 .flip-avatar-inner { animation-delay: 8s; }
+.member-4 .flip-avatar-inner { animation-delay: 12s; }
+
 .team-card h4 { color: var(--navy); font-size: 20px; font-weight: 900; margin-bottom: 5px; }
-.team-role { display: inline-block; background: var(--light-bg); color: var(--brand); padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; }
-.team-card p { font-size: 13px; color: var(--text); line-height: 1.6; }
+.team-role { display: inline-block; background: var(--light-bg); color: var(--brand); padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 900; text-transform: uppercase; margin-bottom: 15px; }
+.team-card p { font-size: 13px; color: var(--text); line-height: 1.6; font-weight: 600;}
 
 /* ==========================================================================
    REDESIGNED STUDENT PORTAL (Dashboard Layout)
@@ -323,7 +371,7 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 /* App Card inside Sidebar */
 .app-card { background: linear-gradient(135deg, var(--brand), #002299); color: white; border: none; display: flex; flex-direction: column; align-items: center; text-align: center; }
 .app-card h3 { font-size: 20px; font-weight: 900; margin-bottom: 10px; }
-.app-card p { font-size: 13px; opacity: 0.9; line-height: 1.5; margin-bottom: 20px; }
+.app-card p { font-size: 13px; font-weight: 600; opacity: 0.9; line-height: 1.5; margin-bottom: 20px; }
 .portal-app-img { width: 100%; max-width: 180px; margin-top: 10px; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)); }
 .play-store-btn-small {
     display: inline-flex; align-items: center; gap: 10px;
@@ -334,13 +382,13 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 .play-store-btn-small:hover { transform: translateY(-3px); background: #111; }
 .play-store-btn-small i { font-size: 24px; }
 .btn-text-small { text-align: left; }
-.btn-text-small span { font-size: 9px; font-weight: 600; text-transform: uppercase; display: block; line-height: 1;}
-.btn-text-small strong { font-size: 14px; font-weight: 800; }
+.btn-text-small span { font-size: 9px; font-weight: 700; text-transform: uppercase; display: block; line-height: 1;}
+.btn-text-small strong { font-size: 14px; font-weight: 900; }
 
 /* Security Card inside Sidebar */
 .security-card { background: #fff1f2; border: 1px solid #ffe4e6; }
 .security-card h3 { color: #e11d48; font-weight: 900; margin-bottom: 8px; font-size: 18px; }
-.security-card p { color: #881337; font-size: 13px; margin-bottom: 15px; font-weight: 500; line-height: 1.5;}
+.security-card p { color: #881337; font-size: 13px; margin-bottom: 15px; font-weight: 600; line-height: 1.5;}
 .portal-mini-form { display: flex; gap: 10px; }
 .portal-mini-form input { flex: 1; padding: 12px; border: 2px solid #fda4af; border-radius: 10px; outline: none; font-weight: 700; font-family: 'Outfit'; width: 100%; font-size: 13px;}
 .portal-mini-form input:focus { border-color: #e11d48; }
@@ -351,28 +399,28 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 .form-card { padding: 0; }
 .form-header { background: var(--light-bg); padding: 25px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
 .form-header h3 { color: var(--navy); font-size: clamp(18px, 3vw, 22px); font-weight: 900; }
-.form-header .badge { background: var(--brand); color: white; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; }
+.form-header .badge { background: var(--brand); color: white; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 900; text-transform: uppercase; }
 
 .premium-form { padding: 30px; display: flex; flex-direction: column; gap: 20px; }
 .form-row { display: grid; grid-template-columns: 1fr; gap: 20px; }
 @media (min-width: 600px) { .form-row { grid-template-columns: 1fr 1fr; } }
 .input-col { display: flex; flex-direction: column; gap: 8px; }
-.input-col label { font-size: 13px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px;}
+.input-col label { font-size: 13px; font-weight: 900; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px;}
 .input-col input, .input-col select {
     padding: 14px; border: 2px solid var(--border); border-radius: 10px;
-    font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 600;
+    font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 700;
     color: var(--text); outline: none; transition: 0.3s; background: var(--light-bg); width: 100%;
 }
 .input-col input:focus, .input-col select:focus { border-color: var(--brand); background: var(--white); box-shadow: 0 0 0 4px rgba(0, 65, 255, 0.1); }
 
 .rules-acknowledgment { display: flex; gap: 15px; background: #eff6ff; padding: 15px; border-radius: 10px; border: 1px dashed #bfdbfe; margin-top: 10px; align-items: flex-start;}
 .rules-acknowledgment i { color: var(--brand); font-size: 20px; margin-top: 2px;}
-.rules-acknowledgment strong { display: block; color: var(--navy); font-size: 13px; margin-bottom: 3px;}
-.rules-acknowledgment p { color: var(--text); font-size: 12px; font-weight: 500; line-height: 1.5; margin: 0;}
+.rules-acknowledgment strong { display: block; color: var(--navy); font-size: 13px; margin-bottom: 3px; font-weight: 900;}
+.rules-acknowledgment p { color: var(--text); font-size: 12px; font-weight: 600; line-height: 1.5; margin: 0;}
 
 .portal-submit-btn {
     background: var(--brand); color: var(--white); border: none;
-    padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 800;
+    padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 900;
     cursor: pointer; width: 100%; transition: 0.3s; font-family: 'Outfit';
     box-shadow: 0 10px 20px rgba(0, 65, 255, 0.2); margin-top: 10px;
     display: flex; justify-content: center; align-items: center; gap: 10px;
@@ -384,7 +432,7 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
     .premium-form { padding: 20px; }
 }
 
-.success-msg { text-align: center; background: #ecfdf5; color: #047857; padding: 15px; border-radius: 12px; font-weight: 700; margin-top: 20px; border: 1px solid #a7f3d0; font-size: 14px;}
+.success-msg { text-align: center; background: #ecfdf5; color: #047857; padding: 15px; border-radius: 12px; font-weight: 900; margin-top: 20px; border: 1px solid #a7f3d0; font-size: 14px;}
 .hidden { display: none !important; }
 
 /* ==========================================================================
@@ -397,16 +445,16 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 .modal-body { padding: 25px; }
 .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
 .info-item { background: var(--light-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border); }
-.info-label { font-size: 11px; font-weight: 800; color: var(--brand); text-transform: uppercase; margin-bottom: 6px; }
+.info-label { font-size: 11px; font-weight: 900; color: var(--brand); text-transform: uppercase; margin-bottom: 6px; }
 .info-val { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.4;}
-.curriculum-box { background: #f1f5f9; padding: 20px; border-radius: 12px; font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.6; }
+.curriculum-box { background: #f1f5f9; padding: 20px; border-radius: 12px; font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.6; }
 
 .modal-fee-box { background: #eff6ff; border: 2px dashed #bfdbfe; border-radius: 12px; padding: 20px; margin-top: 20px; display: flex; justify-content: space-between; align-items: center; }
 .modal-fee-label { font-weight: 900; color: var(--navy); font-size: 14px; text-transform: uppercase; }
 .modal-fee-values { font-size: 22px; font-weight: 900; display: flex; align-items: center;}
-.modal-fee-orig { color: #94a3b8; text-decoration: line-through; margin-right: 12px; font-size: 14px; }
-.modal-fee-disc { color: var(--brand); }
-.close-btn { width: 100%; margin-top: 25px; padding: 18px; background: var(--navy); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 15px; transition: 0.3s; font-family: 'Outfit';}
+.modal-fee-orig { color: #94a3b8; text-decoration: line-through; margin-right: 12px; font-size: 14px; font-weight: 700; }
+.modal-fee-disc { color: var(--brand); font-weight: 900; }
+.close-btn { width: 100%; margin-top: 25px; padding: 18px; background: var(--navy); color: white; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; font-size: 15px; transition: 0.3s; font-family: 'Outfit';}
 .close-btn:hover { background: #1e293b; }
 
 /* ==========================================================================
@@ -415,9 +463,9 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 footer { background: var(--navy); color: white; padding: 60px 30px; display: grid; grid-template-columns: 1fr; gap: 40px; position: relative; z-index: 2; border-top: 6px solid var(--brand); }
 @media (min-width: 768px) { footer { grid-template-columns: 1fr 1fr; padding: 80px 50px; } .text-right { text-align: right; } }
 .footer-col h3 { color: var(--neon); margin-bottom: 15px; font-size: clamp(18px, 3vw, 22px); font-weight: 900; }
-.footer-col p { font-size: clamp(14px, 2vw, 16px); color: #cbd5e1; margin-bottom: 10px; font-weight: 500; line-height: 1.6; }
-.cert-text { font-size: 11px !important; font-weight: 800 !important; color: var(--brand) !important; letter-spacing: 1px; }
-.map-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; color: var(--navy); text-decoration: none; font-weight: 800; font-size: 13px; background: var(--neon); padding: 14px 28px; border-radius: 12px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 242, 255, 0.2); }
+.footer-col p { font-size: clamp(14px, 2vw, 16px); color: #cbd5e1; margin-bottom: 10px; font-weight: 600; line-height: 1.6; }
+.cert-text { font-size: 11px !important; font-weight: 900 !important; color: var(--brand) !important; letter-spacing: 1px; }
+.map-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; color: var(--navy); text-decoration: none; font-weight: 900; font-size: 13px; background: var(--neon); padding: 14px 28px; border-radius: 12px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 242, 255, 0.2); }
 .map-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0, 242, 255, 0.4); }
 .footer-col a { color: var(--white); text-decoration: none; transition: 0.2s; }
 .footer-col a:hover { color: var(--neon); }
@@ -440,6 +488,6 @@ footer { background: var(--navy); color: white; padding: 60px 30px; display: gri
 /* CALL DROPDOWN MENU */
 .call-menu { position: absolute; bottom: 70px; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 12px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); display: flex; flex-direction: column; gap: 10px; opacity: 0; visibility: hidden; transform: translateY(15px) scale(0.9); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-origin: bottom right; pointer-events: none; }
 .call-menu.active { opacity: 1; visibility: visible; transform: translateY(0) scale(1); pointer-events: auto; }
-.call-link { text-decoration: none; color: var(--navy); font-weight: 800; font-size: 14px; padding: 12px 20px; background: white; border-radius: 10px; display: flex; align-items: center; gap: 12px; transition: 0.2s; white-space: nowrap; border: 1px solid var(--border); }
+.call-link { text-decoration: none; color: var(--navy); font-weight: 900; font-size: 14px; padding: 12px 20px; background: white; border-radius: 10px; display: flex; align-items: center; gap: 12px; transition: 0.2s; white-space: nowrap; border: 1px solid var(--border); }
 .call-link:hover { background: var(--brand); color: white; border-color: var(--brand); }
 .call-link i { font-size: 16px; color: inherit; transition: 0.2s; }
