@@ -1,493 +1,258 @@
-/* ==========================================================================
-   GLOBAL VARIABLES & RESET
-   ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap');
+// ==========================================================================
+// 🌐 FIREBASE INITIALIZATION
+// Safely connects your public website to the Excellent Institute Vault
+// ==========================================================================
+const firebaseConfig = {
+    apiKey: "AIzaSyAPJ28Y1jBL30phxN-8yV-4X0raSEuBkx4",
+    authDomain: "excellent-institute-vault.firebaseapp.com",
+    databaseURL: "https://excellent-institute-vault-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "excellent-institute-vault",
+    storageBucket: "excellent-institute-vault.firebasestorage.app",
+    messagingSenderId: "132693034261",
+    appId: "1:132693034261:web:90db93c407607bd3c5951c",
+    measurementId: "G-CTLW9E7MYK"
+};
 
-:root { 
-    --brand: #0041ff; 
-    --brand-hover: #0033cc;
-    --neon: #00f2ff; 
-    --navy: #0a0f1d; 
-    --white: #ffffff; 
-    --text: #334155;
-    --light-bg: #f8fafc;
-    --border: #e2e8f0;
+// Initialize Firebase only if it hasn't been initialized yet
+if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+// ==========================================================================
+// 🖥️ SINGLE PAGE APPLICATION (SPA) NAVIGATION LOGIC
+// Switches between Home, Courses, About, and Portal instantly
+// ==========================================================================
+function switchPage(pageId) {
+    // 1. Hide all pages
+    const pages = document.querySelectorAll('.page-view');
+    pages.forEach(page => {
+        page.classList.remove('active');
+        page.classList.add('hidden');
+    });
+
+    // 2. Remove active state from all desktop nav buttons
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(btn => btn.classList.remove('active'));
+
+    // 3. Show the requested page
+    const activePage = document.getElementById(`view-${pageId}`);
+    if (activePage) {
+        activePage.classList.remove('hidden');
+        // Slight delay allows CSS animation to trigger smoothly
+        setTimeout(() => activePage.classList.add('active'), 10);
+    }
+
+    // 4. Highlight the active nav button (Except the Portal button which stays highlighted)
+    const activeBtn = document.getElementById(`nav-${pageId}`);
+    if (activeBtn && pageId !== 'portal') {
+        activeBtn.classList.add('active');
+    }
+
+    // 5. Scroll to the top of the page smoothly
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-body { 
-    background-color: #f1f5f9; 
-    font-family: 'Outfit', sans-serif; 
-    overflow-x: hidden; 
-    color: var(--text);
+// ==========================================================================
+// 📱 MOBILE NAVIGATION TOGGLE
+// ==========================================================================
+function toggleMobileNav() {
+    const nav = document.getElementById('mobileNav');
+    if (nav) {
+        nav.classList.toggle('active');
+    }
 }
 
-/* ==========================================================================
-   FLOATING WATERMARK EMOJIS
-   ========================================================================== */
-.watermark-container { 
-    position: fixed; 
-    top: 0; left: 0; 
-    width: 100%; height: 100%; 
-    z-index: 0; 
-    pointer-events: none; 
-}
-.float-emoji { 
-    position: absolute; 
-    font-size: clamp(24px, 4vw, 38px); 
-    opacity: 0.15; 
-    animation: floatEmoji 10s infinite ease-in-out; 
-}
-@keyframes floatEmoji { 
-    0%, 100% { transform: translateY(0); } 
-    50% { transform: translateY(-30px); } 
-}
+// ==========================================================================
+// 🎓 COURSE DETAILS MODAL 
+// ==========================================================================
+function showPop(title, dur, who, why, learn, origFee, discFee) {
+    document.getElementById('pTitle').innerText = title;
+    document.getElementById('pDur').innerText = "PROGRAM DURATION: " + dur;
+    document.getElementById('pWho').innerText = who;
+    document.getElementById('pWhy').innerText = why;
 
-/* ==========================================================================
-   SINGLE PAGE APPLICATION (SPA) TABS
-   ========================================================================== */
-.page-view {
-    display: none;
-    animation: fadeIn 0.4s ease-out;
-}
-.page-view.active {
-    display: block;
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    // Generate clean bullet points for Syllabus
+    let syllabusArray = learn.split('|');
+    let syllabusHTML = '<ul style="margin: 0; padding-left: 20px;">';
+    syllabusArray.forEach(item => {
+        syllabusHTML += `<li style="margin-bottom: 6px;">${item}</li>`;
+    });
+    syllabusHTML += '</ul>';
+    document.getElementById('pLearn').innerHTML = syllabusHTML;
+
+    // Inject separate fee data
+    document.getElementById('pFeeOrig').innerText = "₹" + origFee;
+    document.getElementById('pFeeDisc').innerText = "₹" + discFee + "*";
+
+    document.getElementById('pModal').style.display = 'flex';
 }
 
-/* ==========================================================================
-   STICKY NAVIGATION
-   ========================================================================== */
-.navbar {
-    position: fixed;
-    top: 0; left: 0; width: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    z-index: 1000;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-}
-.nav-brand {
-    font-weight: 900;
-    font-size: clamp(18px, 3vw, 22px);
-    color: var(--navy);
-    letter-spacing: -0.5px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.nav-logo {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--brand);
+// ==========================================================================
+// 📞 FLOATING ACTION BUTTON (Call Menu)
+// ==========================================================================
+function toggleCallMenu(event) {
+    if(event) event.stopPropagation();
+    const menu = document.getElementById('callMenu');
+    if(menu) menu.classList.toggle('active');
 }
 
-.nav-links { display: flex; align-items: center; gap: 25px; }
-.nav-links button {
-    background: none;
-    border: none;
-    color: var(--text);
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-    padding: 5px 0;
-}
-.nav-links button:hover, .nav-links button.active { color: var(--brand); }
+// Close call menu if user clicks anywhere else on the screen
+document.addEventListener('click', function(event) {
+    const menu = document.getElementById('callMenu');
+    const callFab = document.getElementById('callFab');
+    if (menu && menu.classList.contains('active') && callFab && !callFab.contains(event.target)) {
+        menu.classList.remove('active');
+    }
+});
 
-.nav-btn-highlight {
-    background: var(--brand) !important;
-    color: var(--white) !important;
-    padding: 10px 20px !important;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 65, 255, 0.2);
-}
-.nav-btn-highlight:hover { background: var(--brand-hover) !important; transform: translateY(-2px); }
+// ==========================================================================
+// 📝 FIREBASE SECURE FORM SUBMISSIONS (STUDENT PORTAL)
+// ==========================================================================
 
-.mobile-menu-btn { display: none; background: none; border: none; font-size: 24px; color: var(--navy); cursor: pointer; }
-.mobile-nav {
-    position: fixed;
-    top: 65px; left: 0; width: 100%;
-    background: var(--white);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    display: flex; flex-direction: column;
-    padding: 20px; gap: 10px;
-    z-index: 999;
-    transform: translateY(-150%);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.mobile-nav.active { transform: translateY(0); }
-.mobile-nav button { 
-    background: var(--light-bg); border: none; 
-    color: var(--navy); font-weight: 700; font-size: 16px; 
-    padding: 15px; border-radius: 8px; text-align: center; 
-    cursor: pointer; font-family: 'Outfit', sans-serif;
-}
-.mobile-nav button:active { background: #e2e8f0; }
+// 1. Handle New Student Public Registrations
+async function submitPublicRegistration(event) {
+    event.preventDefault();
+    const btn = document.getElementById('reg-submit-btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+    btn.disabled = true;
 
-@media (max-width: 850px) {
-    .nav-links { display: none; }
-    .mobile-menu-btn { display: block; }
-}
+    // Build the payload
+    const newRegistration = {
+        id: "LEAD_" + Date.now(),
+        name: document.getElementById('reg-name').value.trim(),
+        phone: document.getElementById('reg-phone').value.trim(),
+        fatherName: document.getElementById('reg-father').value.trim(),
+        course: document.getElementById('reg-course').value,
+        date: new Date().toISOString(),
+        status: "Pending Action"
+    };
 
-/* ==========================================================================
-   GLOBAL LAYOUT & HEADER (Animated)
-   ========================================================================== */
-.page-section { padding: 120px 20px 60px 20px; position: relative; z-index: 2; }
-.bg-light { background-color: var(--white); }
-.section-title { text-align: center; font-size: clamp(24px, 5vw, 36px); font-weight: 900; color: var(--navy); margin-bottom: 30px; }
-.section-subtitle { font-size: clamp(18px, 4vw, 22px); font-weight: 900; color: var(--text); margin-bottom: 20px; }
+    try {
+        // Pushes the data to a secure node in your database called 'public_registrations'
+        // This keeps it separate from your actual active student list until you approve them
+        await firebase.database().ref('public_registrations').push(newRegistration);
+        
+        // Show success UI
+        document.getElementById('public-reg-form').reset();
+        document.getElementById('reg-success-msg').classList.remove('hidden');
+        
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+            document.getElementById('reg-success-msg').classList.add('hidden');
+        }, 5000);
 
-header { 
-    background: var(--navy); padding: 60px 20px; text-align: center; 
-    border-radius: 30px; margin: 0 auto; max-width: 1200px;
-    border-bottom: 6px solid var(--brand); position: relative; z-index: 10; 
-    overflow: hidden; transition: all 0.2s; box-shadow: 0 20px 40px rgba(10, 15, 29, 0.2);
+    } catch (error) {
+        alert("Submission failed. Please check your internet connection and try again.");
+        console.error("Firebase Error:", error);
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
 }
 
-.logo-tm {
-    width: clamp(80px, 15vw, 120px); height: auto; margin-bottom: 20px;
-    filter: drop-shadow(0 0 15px rgba(0, 242, 255, 0.3));
-    animation: logoFade 1.5s ease-out;
-}
-@keyframes logoFade { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+// 2. Handle Data Deletion Requests (Privacy Compliance)
+async function submitDataRemoval(event) {
+    event.preventDefault();
+    const btn = document.getElementById('remove-submit-btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+    btn.disabled = true;
 
-header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #fff; }
-@keyframes tvShutDown {
-    0% { transform: scaleY(1); filter: brightness(1); }
-    20% { transform: scaleY(0.01) scaleX(1); filter: brightness(10); }
-    50% { transform: scaleY(0.01) scaleX(0); filter: brightness(50); opacity: 1; }
-    100% { transform: scaleY(1) scaleX(1); filter: brightness(1); opacity: 1; }
-}
+    const phone = document.getElementById('remove-phone').value.trim();
+    const requestPayload = {
+        id: "DEL_REQ_" + Date.now(),
+        phone: phone,
+        requestDate: new Date().toISOString(),
+        status: "Pending Verification"
+    };
 
-.name-wrapper { display: flex; justify-content: center; height: 60px; position: relative; flex-wrap: wrap; }
-@media (min-width: 768px) { .name-wrapper { height: 80px; flex-wrap: nowrap; } }
+    try {
+        // Sends the request to your database
+        await firebase.database().ref('data_removal_requests').push(requestPayload);
+        
+        document.getElementById('data-removal-form').reset();
+        document.getElementById('remove-success-msg').classList.remove('hidden');
+        
+        setTimeout(() => {
+            document.getElementById('remove-success-msg').classList.add('hidden');
+        }, 5000);
 
-.letter { 
-    display: inline-block; font-size: clamp(24px, 6vw, 60px); 
-    font-weight: 900; color: white; opacity: 0; transform: translateY(-350px); position: relative; 
-}
-.letter.active { opacity: 1; transform: translateY(0); transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s; }
-.shake { animation: earthquake 0.3s infinite; }
-@keyframes earthquake { 0% { transform: translate(3px, 0px); } 25% { transform: translate(-3px, 2px); } 50% { transform: translate(3px, -2px); } 100% { transform: translate(-3px, 1px); } }
-.letter.fall { opacity: 0 !important; transform: translateY(1100px) rotateX(250deg) rotateZ(120deg) skew(15deg) !important; transition: transform 0.9s cubic-bezier(0.55, 0.055, 0.675, 0.19), opacity 0.4s !important; }
-.letter.it-hang { opacity: 1; transform: translateY(0); animation: dangle 1.8s ease-in-out infinite; transform-origin: top center; z-index: 100; color: white; }
-@keyframes dangle { 0%, 100% { transform: rotate(14deg); } 50% { transform: rotate(-14deg); } }
-
-.tagline { display: block; margin-top: 25px; color: var(--neon); letter-spacing: 3px; font-size: clamp(10px, 2.5vw, 14px); font-weight: 900; text-transform: uppercase; animation: tubeLight 4.5s infinite; }
-@keyframes tubeLight { 0%, 15%, 20%, 25%, 50%, 100% { opacity: 1; text-shadow: 0 0 12px var(--neon); } 18%, 22%, 52% { opacity: 0.1; text-shadow: none; } }
-
-/* ==========================================================================
-   TICKER MARQUEE
-   ========================================================================== */
-.ticker-container {
-    width: 100%; max-width: 1200px; margin: 0 auto;
-    background: #060b14; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
-    overflow: hidden; display: flex; white-space: nowrap; padding: 12px 0; position: relative; z-index: 9;
-}
-.ticker-track { display: flex; align-items: center; animation: moveTrain 30s linear infinite; }
-.ticker-track:hover { animation-play-state: paused; cursor: default; }
-.train-msg { display: flex; align-items: center; padding-right: 50px; }
-.highlight-text { color: var(--neon); font-weight: 900; font-size: 14px; margin: 0 15px; letter-spacing: 1px; text-transform: uppercase; }
-.train-car { background: white; color: var(--navy); padding: 5px 12px; border-radius: 6px; border-bottom: 3px solid var(--brand); font-weight: 900; font-size: 11px; text-transform: uppercase; }
-.train-link { color: #475569; font-size: 16px; margin: 0 2px; font-weight: 900; }
-@keyframes moveTrain { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-/* ==========================================================================
-   INFINITE AUTO-SCROLLING GALLERY
-   ========================================================================== */
-.marquee-gallery-wrapper { max-width: 1200px; margin: 40px auto; padding: 0 20px; overflow: hidden; }
-.marquee-container { width: 100%; overflow: hidden; position: relative; border-radius: 20px; }
-.marquee-track-auto { 
-    display: flex; width: max-content; gap: 20px; 
-    animation: scrollGallery 25s linear infinite; 
-}
-.marquee-track-auto:hover { animation-play-state: paused; }
-.gallery-img { 
-    width: clamp(250px, 40vw, 320px); height: clamp(180px, 30vw, 220px); 
-    object-fit: cover; border-radius: 16px; 
-    border: 4px solid var(--white); box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
-    transition: transform 0.3s; 
-}
-.gallery-img:hover { transform: scale(1.02); }
-@keyframes scrollGallery { 
-    0% { transform: translateX(0); } 
-    100% { transform: translateX(calc(-50% - 10px)); } 
+    } catch (error) {
+        alert("Failed to submit removal request. Please call the institute directly.");
+        console.error("Firebase Error:", error);
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
 }
 
-/* ==========================================================================
-   COURSES SECTION (3D CARDS & FIXED FONT WEIGHTS)
-   ========================================================================== */
-.main-content { display: grid; grid-template-columns: 1fr; gap: 30px; max-width: 1200px; margin: 0 auto; perspective: 1000px; }
-@media (min-width: 992px) { .main-content { grid-template-columns: repeat(3, 1fr); } }
+// ==========================================================================
+// 🎬 TRADEMARK 3D HEADER ANIMATIONS 
+// ==========================================================================
+const nameText = "EXCELLENT INSTITUTE";
+const container = document.getElementById('nameContainer');
+const headerBg = document.getElementById('headerBg');
 
-.card { 
-    background: white; border-radius: 20px; border-top: 8px solid var(--brand); 
-    box-shadow: 0 15px 35px rgba(0,0,0,0.05); overflow: hidden; 
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s; 
-    transform-style: preserve-3d;
-}
-.card:hover { transform: translateY(-10px) rotateX(5deg) rotateY(-2deg); box-shadow: 0 25px 50px rgba(0, 65, 255, 0.15); }
-.card-header { background: var(--light-bg); padding: 20px; color: var(--brand); font-weight: 900; font-size: 14px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
-.item { padding: 20px; border-bottom: 1px solid #f1f5f9; cursor: pointer; transition: 0.3s; }
-.item:hover { background: #f0f7ff; padding-left: 28px; }
-.top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;}
-.c-name { font-weight: 900; color: #111827; font-size: clamp(16px, 2vw, 18px); line-height: 1.2;}
-.dur { background: var(--brand); color: white; font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: 900; white-space: nowrap;}
-.preview-text { font-size: 13px; font-weight: 600; color: #64748b; margin-top: 8px; line-height: 1.5; display: block; }
-.fee-display { margin-top: 10px; font-size: 14px; font-weight: 900; color: #111827; }
-.fee-strike { color: #94a3b8; text-decoration: line-through; margin-right: 6px; font-weight: 700; }
-.fee-active { color: var(--brand); font-weight: 900; }
-
-/* ==========================================================================
-   FLEXIBLE CONTENT CONTAINERS (About & App)
-   ========================================================================== */
-.content-container { display: flex; flex-direction: column; gap: 40px; max-width: 1100px; margin: 0 auto; align-items: center; }
-@media (min-width: 768px) {
-    .flex-col-md { flex-direction: row; }
-    .reverse-mobile { flex-direction: row-reverse; }
+function createLetters() {
+    if(!container) return;
+    container.innerHTML = '';
+    nameText.split('').forEach((char, i) => {
+        const span = document.createElement('span');
+        span.innerText = char === ' ' ? '\u00A0' : char;
+        span.className = 'letter';
+        if(char === ' ') span.style.width = "15px";
+        
+        // Survivor logic: Targeting indices 14 and 15 specifically (I and T in INSTITUTE)
+        if(i === 14) span.id = "survivor-i"; 
+        if(i === 15) span.id = "survivor-t"; 
+        
+        container.appendChild(span);
+    });
 }
 
-.about-text, .app-text { flex: 1; width: 100%;}
-.about-image, .app-image { flex: 1; display: flex; justify-content: center; width: 100%;}
-.about-image img, .mockup-img { width: 100%; max-width: 400px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover;}
-.mockup-img { background: transparent; box-shadow: none; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15)); }
+async function startCycle() {
+    if(!container || !headerBg) return;
+    
+    createLetters();
+    const letters = document.querySelectorAll('.letter');
+    
+    headerBg.classList.add('tv-glitch');
+    await new Promise(r => setTimeout(r, 600));
+    headerBg.classList.remove('tv-glitch');
 
-.about-desc { font-size: clamp(14px, 2vw, 16px); line-height: 1.8; font-weight: 600; color: var(--text); margin-bottom: 25px; }
-.about-highlights { list-style: none; display: flex; flex-direction: column; gap: 15px; }
-.about-highlights li { font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 10px; font-size: clamp(13px, 2vw, 15px);}
-.about-highlights i { color: var(--brand); font-size: 20px; }
+    for(let i=0; i<letters.length; i++) {
+        await new Promise(r => setTimeout(r, 70));
+        letters[i].classList.add('active');
+    }
 
-/* ==========================================================================
-   LEADERSHIP TEAM PROFILES (3D Flip Animation)
-   ========================================================================== */
-.team-wrapper { max-width: 1200px; margin: 60px auto 0; }
-.team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; padding: 20px; }
-.team-card { 
-    background: white; padding: 30px 20px; border-radius: 20px; text-align: center; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; 
-    border-bottom: 5px solid transparent; 
-}
-.team-card:hover { transform: translateY(-10px); border-bottom-color: var(--brand); box-shadow: 0 20px 40px rgba(0,65,255,0.1); }
+    await new Promise(r => setTimeout(r, 2000));
+    headerBg.classList.add('shake');
+    await new Promise(r => setTimeout(r, 1200));
+    headerBg.classList.remove('shake');
 
-/* 3D Flip Avatar setup */
-.flip-avatar {
-    width: 120px;
-    height: 120px;
-    perspective: 1000px;
-    margin: 0 auto 15px;
-}
-.flip-avatar-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform-style: preserve-3d;
-    animation: flipCycle 16s infinite;
-}
-.flip-avatar-front, .flip-avatar-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    border-radius: 50%;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    border: 4px solid var(--light-bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
-    font-weight: 900;
-    color: white;
-    overflow: hidden;
-}
-.flip-avatar-back {
-    transform: rotateY(180deg);
-}
-.flip-avatar-back img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    letters.forEach((l, i) => {
+        if(l.id !== 'survivor-i' && l.id !== 'survivor-t') {
+            setTimeout(() => { l.classList.remove('active'); l.classList.add('fall'); }, i * 40);
+        } else { 
+            l.classList.add('it-hang'); 
+        }
+    });
+
+    await new Promise(r => setTimeout(r, 3800));
+    const iChar = document.getElementById('survivor-i');
+    const tChar = document.getElementById('survivor-t');
+    if(iChar && tChar) {
+        iChar.classList.remove('it-hang'); iChar.classList.add('fall');
+        await new Promise(r => setTimeout(r, 350));
+        tChar.classList.remove('it-hang'); tChar.classList.add('fall');
+    }
+    
+    await new Promise(r => setTimeout(r, 1500));
+    startCycle(); // Loop endlessly
 }
 
-/* 16 Second Total Cycle. Each person gets 4 seconds in the spotlight */
-@keyframes flipCycle {
-    0%, 5% { transform: rotateY(0deg); }
-    10%, 25% { transform: rotateY(180deg); } /* Flipped showing photo */
-    30%, 100% { transform: rotateY(0deg); } /* Back to initials */
-}
-
-/* Stagger the animations 4 seconds apart */
-.member-1 .flip-avatar-inner { animation-delay: 0s; }
-.member-2 .flip-avatar-inner { animation-delay: 4s; }
-.member-3 .flip-avatar-inner { animation-delay: 8s; }
-.member-4 .flip-avatar-inner { animation-delay: 12s; }
-
-.team-card h4 { color: var(--navy); font-size: 20px; font-weight: 900; margin-bottom: 5px; }
-.team-role { display: inline-block; background: var(--light-bg); color: var(--brand); padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 900; text-transform: uppercase; margin-bottom: 15px; }
-.team-card p { font-size: 13px; color: var(--text); line-height: 1.6; font-weight: 600;}
-
-/* ==========================================================================
-   REDESIGNED STUDENT PORTAL (Dashboard Layout)
-   ========================================================================== */
-.portal-header { margin-bottom: 40px; }
-.portal-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
-    align-items: start;
-}
-@media (min-width: 992px) {
-    .portal-grid { grid-template-columns: 350px 1fr; }
-}
-
-.portal-sidebar { display: flex; flex-direction: column; gap: 25px; }
-.portal-card {
-    background: var(--white);
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-    border: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-}
-
-/* App Card inside Sidebar */
-.app-card { background: linear-gradient(135deg, var(--brand), #002299); color: white; border: none; display: flex; flex-direction: column; align-items: center; text-align: center; }
-.app-card h3 { font-size: 20px; font-weight: 900; margin-bottom: 10px; }
-.app-card p { font-size: 13px; font-weight: 600; opacity: 0.9; line-height: 1.5; margin-bottom: 20px; }
-.portal-app-img { width: 100%; max-width: 180px; margin-top: 10px; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)); }
-.play-store-btn-small {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: #000; color: white; text-decoration: none;
-    padding: 10px 20px; border-radius: 10px; transition: 0.3s;
-    border: 1px solid rgba(255,255,255,0.2);
-}
-.play-store-btn-small:hover { transform: translateY(-3px); background: #111; }
-.play-store-btn-small i { font-size: 24px; }
-.btn-text-small { text-align: left; }
-.btn-text-small span { font-size: 9px; font-weight: 700; text-transform: uppercase; display: block; line-height: 1;}
-.btn-text-small strong { font-size: 14px; font-weight: 900; }
-
-/* Security Card inside Sidebar */
-.security-card { background: #fff1f2; border: 1px solid #ffe4e6; }
-.security-card h3 { color: #e11d48; font-weight: 900; margin-bottom: 8px; font-size: 18px; }
-.security-card p { color: #881337; font-size: 13px; margin-bottom: 15px; font-weight: 600; line-height: 1.5;}
-.portal-mini-form { display: flex; gap: 10px; }
-.portal-mini-form input { flex: 1; padding: 12px; border: 2px solid #fda4af; border-radius: 10px; outline: none; font-weight: 700; font-family: 'Outfit'; width: 100%; font-size: 13px;}
-.portal-mini-form input:focus { border-color: #e11d48; }
-.portal-mini-form button { background: #e11d48; color: white; border: none; padding: 0 15px; border-radius: 10px; cursor: pointer; transition: 0.3s; }
-.portal-mini-form button:hover { background: #be123c; }
-
-/* Main Registration Form Card */
-.form-card { padding: 0; }
-.form-header { background: var(--light-bg); padding: 25px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-.form-header h3 { color: var(--navy); font-size: clamp(18px, 3vw, 22px); font-weight: 900; }
-.form-header .badge { background: var(--brand); color: white; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 900; text-transform: uppercase; }
-
-.premium-form { padding: 30px; display: flex; flex-direction: column; gap: 20px; }
-.form-row { display: grid; grid-template-columns: 1fr; gap: 20px; }
-@media (min-width: 600px) { .form-row { grid-template-columns: 1fr 1fr; } }
-.input-col { display: flex; flex-direction: column; gap: 8px; }
-.input-col label { font-size: 13px; font-weight: 900; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px;}
-.input-col input, .input-col select {
-    padding: 14px; border: 2px solid var(--border); border-radius: 10px;
-    font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 700;
-    color: var(--text); outline: none; transition: 0.3s; background: var(--light-bg); width: 100%;
-}
-.input-col input:focus, .input-col select:focus { border-color: var(--brand); background: var(--white); box-shadow: 0 0 0 4px rgba(0, 65, 255, 0.1); }
-
-.rules-acknowledgment { display: flex; gap: 15px; background: #eff6ff; padding: 15px; border-radius: 10px; border: 1px dashed #bfdbfe; margin-top: 10px; align-items: flex-start;}
-.rules-acknowledgment i { color: var(--brand); font-size: 20px; margin-top: 2px;}
-.rules-acknowledgment strong { display: block; color: var(--navy); font-size: 13px; margin-bottom: 3px; font-weight: 900;}
-.rules-acknowledgment p { color: var(--text); font-size: 12px; font-weight: 600; line-height: 1.5; margin: 0;}
-
-.portal-submit-btn {
-    background: var(--brand); color: var(--white); border: none;
-    padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 900;
-    cursor: pointer; width: 100%; transition: 0.3s; font-family: 'Outfit';
-    box-shadow: 0 10px 20px rgba(0, 65, 255, 0.2); margin-top: 10px;
-    display: flex; justify-content: center; align-items: center; gap: 10px;
-}
-.portal-submit-btn:hover { background: var(--brand-hover); transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0, 65, 255, 0.3); }
-
-@media (max-width: 600px) {
-    .form-header { padding: 20px; flex-direction: column; align-items: flex-start; gap: 10px; }
-    .premium-form { padding: 20px; }
-}
-
-.success-msg { text-align: center; background: #ecfdf5; color: #047857; padding: 15px; border-radius: 12px; font-weight: 900; margin-top: 20px; border: 1px solid #a7f3d0; font-size: 14px;}
-.hidden { display: none !important; }
-
-/* ==========================================================================
-   MODAL DIALOG (COURSE DETAILS)
-   ========================================================================== */
-.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 15, 29, 0.95); display: none; z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-.modal-content { background: white; border-radius: 25px; width: 92%; max-width: 500px; max-height: 85vh; overflow-y: auto; position: relative; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-@keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-.modal-header { background: linear-gradient(135deg, var(--brand), var(--brand-hover)); color: white; padding: 25px; text-align: center; position: sticky; top: 0; z-index: 5; }
-.modal-body { padding: 25px; }
-.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-.info-item { background: var(--light-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border); }
-.info-label { font-size: 11px; font-weight: 900; color: var(--brand); text-transform: uppercase; margin-bottom: 6px; }
-.info-val { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.4;}
-.curriculum-box { background: #f1f5f9; padding: 20px; border-radius: 12px; font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.6; }
-
-.modal-fee-box { background: #eff6ff; border: 2px dashed #bfdbfe; border-radius: 12px; padding: 20px; margin-top: 20px; display: flex; justify-content: space-between; align-items: center; }
-.modal-fee-label { font-weight: 900; color: var(--navy); font-size: 14px; text-transform: uppercase; }
-.modal-fee-values { font-size: 22px; font-weight: 900; display: flex; align-items: center;}
-.modal-fee-orig { color: #94a3b8; text-decoration: line-through; margin-right: 12px; font-size: 14px; font-weight: 700; }
-.modal-fee-disc { color: var(--brand); font-weight: 900; }
-.close-btn { width: 100%; margin-top: 25px; padding: 18px; background: var(--navy); color: white; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; font-size: 15px; transition: 0.3s; font-family: 'Outfit';}
-.close-btn:hover { background: #1e293b; }
-
-/* ==========================================================================
-   FOOTER & SOCIAL LINKS
-   ========================================================================== */
-footer { background: var(--navy); color: white; padding: 60px 30px; display: grid; grid-template-columns: 1fr; gap: 40px; position: relative; z-index: 2; border-top: 6px solid var(--brand); }
-@media (min-width: 768px) { footer { grid-template-columns: 1fr 1fr; padding: 80px 50px; } .text-right { text-align: right; } }
-.footer-col h3 { color: var(--neon); margin-bottom: 15px; font-size: clamp(18px, 3vw, 22px); font-weight: 900; }
-.footer-col p { font-size: clamp(14px, 2vw, 16px); color: #cbd5e1; margin-bottom: 10px; font-weight: 600; line-height: 1.6; }
-.cert-text { font-size: 11px !important; font-weight: 900 !important; color: var(--brand) !important; letter-spacing: 1px; }
-.map-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; color: var(--navy); text-decoration: none; font-weight: 900; font-size: 13px; background: var(--neon); padding: 14px 28px; border-radius: 12px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 242, 255, 0.2); }
-.map-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0, 242, 255, 0.4); }
-.footer-col a { color: var(--white); text-decoration: none; transition: 0.2s; }
-.footer-col a:hover { color: var(--neon); }
-
-.social-links { display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;}
-@media (min-width: 768px) { .social-links { justify-content: flex-end; } }
-.social-links a { font-size: 28px; color: white; transition: 0.3s; display: inline-flex;}
-.social-links a:hover { color: var(--neon); transform: translateY(-3px); }
-
-/* ==========================================================================
-   FLOATING ACTION BUBBLES
-   ========================================================================== */
-.fab-container { position: fixed; bottom: 25px; right: 25px; display: flex; flex-direction: column; gap: 15px; z-index: 9999; }
-.fab-bubble { width: 55px; height: 55px; border-radius: 50%; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.6); box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15); display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; position: relative; text-decoration: none; }
-.fab-bubble:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 1); }
-.fab-icon { width: 26px; height: 26px; }
-.fab-icon.call { fill: var(--brand); }
-.fab-icon.wa { fill: #25D366; }
-
-/* CALL DROPDOWN MENU */
-.call-menu { position: absolute; bottom: 70px; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 12px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); display: flex; flex-direction: column; gap: 10px; opacity: 0; visibility: hidden; transform: translateY(15px) scale(0.9); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-origin: bottom right; pointer-events: none; }
-.call-menu.active { opacity: 1; visibility: visible; transform: translateY(0) scale(1); pointer-events: auto; }
-.call-link { text-decoration: none; color: var(--navy); font-weight: 900; font-size: 14px; padding: 12px 20px; background: white; border-radius: 10px; display: flex; align-items: center; gap: 12px; transition: 0.2s; white-space: nowrap; border: 1px solid var(--border); }
-.call-link:hover { background: var(--brand); color: white; border-color: var(--brand); }
-.call-link i { font-size: 16px; color: inherit; transition: 0.2s; }
+// Trigger animations when the page finishes loading
+window.onload = function() {
+    startCycle();
+};
