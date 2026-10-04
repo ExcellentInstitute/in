@@ -20,7 +20,7 @@ if (typeof firebase !== 'undefined' && !firebase.apps.length) {
 
 // ==========================================================================
 // 🖥️ SINGLE PAGE APPLICATION (SPA) NAVIGATION LOGIC
-// Switches between Home, Courses, About, and Portal without reloading
+// Switches between Home, Courses, About, and Portal instantly
 // ==========================================================================
 function switchPage(pageId) {
     // 1. Hide all pages
@@ -38,16 +38,17 @@ function switchPage(pageId) {
     const activePage = document.getElementById(`view-${pageId}`);
     if (activePage) {
         activePage.classList.remove('hidden');
-        activePage.classList.add('active');
+        // Slight delay allows CSS animation to trigger smoothly
+        setTimeout(() => activePage.classList.add('active'), 10);
     }
 
-    // 4. Highlight the active nav button (if it's not the portal button)
+    // 4. Highlight the active nav button (Except the Portal button which stays highlighted)
     const activeBtn = document.getElementById(`nav-${pageId}`);
     if (activeBtn && pageId !== 'portal') {
         activeBtn.classList.add('active');
     }
 
-    // 5. Scroll to top
+    // 5. Scroll to the top of the page smoothly
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -62,7 +63,7 @@ function toggleMobileNav() {
 }
 
 // ==========================================================================
-// 🎓 COURSE DETAILS MODAL (Preserved from your original code)
+// 🎓 COURSE DETAILS MODAL 
 // ==========================================================================
 function showPop(title, dur, who, why, learn, origFee, discFee) {
     document.getElementById('pTitle').innerText = title;
@@ -105,14 +106,14 @@ document.addEventListener('click', function(event) {
 });
 
 // ==========================================================================
-// 📝 FIREBASE SECURE FORM SUBMISSIONS
+// 📝 FIREBASE SECURE FORM SUBMISSIONS (STUDENT PORTAL)
 // ==========================================================================
 
 // 1. Handle New Student Public Registrations
 async function submitPublicRegistration(event) {
     event.preventDefault();
     const btn = document.getElementById('reg-submit-btn');
-    const originalText = btn.innerText;
+    const originalText = btn.innerHTML;
     btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
     btn.disabled = true;
 
@@ -129,7 +130,7 @@ async function submitPublicRegistration(event) {
 
     try {
         // Pushes the data to a secure node in your database called 'public_registrations'
-        // This keeps it separate from your actual active student list until you manually approve them in the Admin ERP
+        // This keeps it separate from your actual active student list until you approve them
         await firebase.database().ref('public_registrations').push(newRegistration);
         
         // Show success UI
@@ -154,8 +155,8 @@ async function submitPublicRegistration(event) {
 async function submitDataRemoval(event) {
     event.preventDefault();
     const btn = document.getElementById('remove-submit-btn');
-    const originalText = btn.innerText;
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
     btn.disabled = true;
 
     const phone = document.getElementById('remove-phone').value.trim();
@@ -187,7 +188,7 @@ async function submitDataRemoval(event) {
 }
 
 // ==========================================================================
-// 🎬 TRADEMARK 3D HEADER ANIMATIONS (Preserved Logic)
+// 🎬 TRADEMARK 3D HEADER ANIMATIONS 
 // ==========================================================================
 const nameText = "EXCELLENT INSTITUTE";
 const container = document.getElementById('nameContainer');
