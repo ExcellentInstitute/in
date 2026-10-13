@@ -179,8 +179,9 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 .name-wrapper { display: flex; justify-content: center; min-height: 60px; position: relative; flex-wrap: wrap; align-content: center;}
 @media (min-width: 768px) { .name-wrapper { min-height: 80px; flex-wrap: nowrap; } }
 
+/* 🚨 RESPONSIVE FIX: Smaller font size to prevent mid-word letter breaks */
 .letter { 
-    display: inline-block; font-size: clamp(24px, 6vw, 60px); 
+    display: inline-block; font-size: clamp(16px, 4.5vw, 60px); 
     font-weight: 900; color: white; opacity: 0; transform: translateY(-350px); position: relative; 
 }
 .letter.active { opacity: 1; transform: translateY(0); transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s; }
