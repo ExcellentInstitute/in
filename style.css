@@ -175,14 +175,27 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
     100% { transform: scaleY(1) scaleX(1); filter: brightness(1); opacity: 1; }
 }
 
-.name-wrapper { display: flex; justify-content: center; min-height: 65px; height: auto; position: relative; flex-wrap: wrap; align-items: center; }
-@media (min-width: 768px) { .name-wrapper { min-height: 80px; flex-wrap: nowrap; } }
+/* 🚨 RESPONSIVE FIX: Forced nowrap and vertical centering to completely eliminate text chopping on mobile */
+.name-wrapper { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 70px; 
+    height: auto; 
+    position: relative; 
+    flex-wrap: nowrap; 
+    overflow: visible;
+}
 
-/* 🚨 RESPONSIVE FIX: Scaled down from 24px/6vw so "INSTITUTE" fits on one line */
+/* 🚨 RESPONSIVE FIX: Lowered minimum font size so "EXCELLENT INSTITUTE" scales down cleanly on narrow screens */
 .letter { 
     display: inline-block; 
-    font-size: clamp(14px, 5vw, 60px); 
-    font-weight: 900; color: white; opacity: 0; transform: translateY(-350px); position: relative; 
+    font-size: clamp(13px, 4.2vw, 55px); 
+    font-weight: 900; 
+    color: white; 
+    opacity: 0; 
+    transform: translateY(-350px); 
+    position: relative; 
 }
 .letter.active { opacity: 1; transform: translateY(0); transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s; }
 .shake { animation: earthquake 0.3s infinite; }
@@ -191,7 +204,17 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 .letter.it-hang { opacity: 1; transform: translateY(0); animation: dangle 1.8s ease-in-out infinite; transform-origin: top center; z-index: 100; color: white; }
 @keyframes dangle { 0%, 100% { transform: rotate(14deg); } 50% { transform: rotate(-14deg); } }
 
-.tagline { display: block; margin-top: 25px; color: var(--neon); letter-spacing: 3px; font-size: clamp(10px, 2.5vw, 14px); font-weight: 900; text-transform: uppercase; animation: tubeLight 4.5s infinite; }
+/* 🚨 INDEPENDENT TAGLINE SIZING: Prevents it from scaling identically to the title */
+.tagline { 
+    display: block; 
+    margin-top: 25px; 
+    color: var(--neon); 
+    letter-spacing: 2px; 
+    font-size: clamp(9px, 2vw, 13px); 
+    font-weight: 900; 
+    text-transform: uppercase; 
+    animation: tubeLight 4.5s infinite; 
+}
 @keyframes tubeLight { 0%, 15%, 20%, 25%, 50%, 100% { opacity: 1; text-shadow: 0 0 12px var(--neon); } 18%, 22%, 52% { opacity: 0.1; text-shadow: none; } }
 
 /* ==========================================================================
@@ -211,7 +234,7 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 @keyframes moveTrain { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
 /* ==========================================================================
-   INFINITE AUTO-SCROLLING GALLERY
+   INFINITE AUTO-SCROLLING GALLERY (Transparent & Clean Border)
    ========================================================================== */
 .marquee-gallery-wrapper { max-width: 1200px; margin: 40px auto; padding: 0 20px; overflow: hidden; }
 .marquee-container { width: 100%; overflow: hidden; position: relative; border-radius: 20px; }
@@ -221,16 +244,16 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 }
 .marquee-track-auto:hover { animation-play-state: paused; }
 
-/* 🚨 UNIFORM GALLERY FIX: Perfectly scales height, adapts width to image aspect ratio (No cropping, no letterboxing) */
+/* 🚨 UNIFORM GALLERY FIX: Transparent background, clean custom border, and natural aspect ratio to prevent cropping */
 .gallery-img { 
-    height: clamp(180px, 40vw, 240px); /* Uniform row height */
-    width: auto;                       /* Adapts width to fit the exact image naturally */
-    max-width: 85vw;                   /* Safety constraint for ultra-wide images on mobile */
-    object-fit: contain;               /* Ensure full visibility without any cropping */
-    border-radius: 12px; 
-    border: 3px solid rgba(255, 255, 255, 0.4); /* Transparent glass border hugging the image */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
-    background-color: transparent;     /* Completely transparent background */
+    height: clamp(170px, 35vw, 220px); 
+    width: auto; 
+    max-width: 80vw;
+    object-fit: contain; 
+    border-radius: 14px; 
+    border: 2px solid rgba(0, 242, 255, 0.35); /* Sleek neon cyan border framing the image */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+    background-color: transparent; /* Completely transparent background */
     transition: transform 0.3s; 
 }
 .gallery-img:hover { transform: scale(1.02); }
@@ -452,10 +475,7 @@ header.tv-glitch { animation: tvShutDown 0.6s ease-out forwards; background: #ff
 @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .modal-header { background: linear-gradient(135deg, var(--brand), var(--brand-hover)); color: white; padding: 25px; text-align: center; position: sticky; top: 0; z-index: 5; }
 .modal-body { padding: 25px; }
-
-/* 🚨 RESPONSIVE FIX: Allowed the modal grid to collapse smoothly on narrow devices */
-.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-bottom: 20px; }
-
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
 .info-item { background: var(--light-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border); }
 .info-label { font-size: 11px; font-weight: 900; color: var(--brand); text-transform: uppercase; margin-bottom: 6px; }
 .info-val { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.4;}
