@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!-- Prevent browser & WebView from getting stuck on cached HTML -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Excellent Institute | The Elite Tech Mission</title>
     
     <link rel="icon" type="image/jpeg" sizes="any" href="logo.jpeg">
@@ -12,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- External CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" id="mainStylesheet">
 
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -43,8 +47,18 @@
             <button onclick="switchPage('courses')" class="nav-item" id="nav-courses">Courses</button>
             <button onclick="switchPage('about')" class="nav-item" id="nav-about">About & Team</button>
             <button onclick="switchPage('portal')" class="nav-btn-highlight" id="nav-portal">Student Portal</button>
+            <button onclick="forceHardRefresh(this)" class="nav-refresh-btn" title="Refresh Page">
+                <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
         </div>
-        <button class="mobile-menu-btn" onclick="toggleMobileNav()"><i class="fa-solid fa-bars"></i></button>
+        <div class="mobile-nav-actions">
+            <button class="mobile-refresh-btn" onclick="forceHardRefresh(this)" title="Refresh Page">
+                <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+            <button class="mobile-menu-btn" onclick="toggleMobileNav()" title="Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
     </nav>
 
     <!-- MOBILE NAVIGATION -->
@@ -53,6 +67,9 @@
         <button onclick="switchPage('courses'); toggleMobileNav()">Courses</button>
         <button onclick="switchPage('about'); toggleMobileNav()">About & Team</button>
         <button onclick="switchPage('portal'); toggleMobileNav()">Student Portal</button>
+        <button onclick="forceHardRefresh(this); toggleMobileNav()" style="color: var(--brand);">
+            <i class="fa-solid fa-arrows-rotate"></i> Refresh Page
+        </button>
     </div>
 
     <!-- ========================================== -->
@@ -131,17 +148,17 @@
                     <div class="item" onclick="showPop('Basic Computer Course (BCC)', '3 Months', 'Beginners & Students', 'Foundational Digital Literacy', 'Computer Fundamentals|Operating System Basics|MS Word|MS Excel|MS PowerPoint|Internet & Email|Practical & Viva', '1700', '1500')">
                         <div class="top-row"><span class="c-name">BCC</span><span class="dur">3 MONTHS</span></div>
                         <span class="preview-text">Essential computing, MS Office, and Internet skills.</span>
-                        <div class="fee-dis">Fee: <span class="fee-strike">₹1700</span><span class="fee-active">₹1500*</span></div>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹1700</span><span class="fee-active">₹1500*</span></div>
                     </div>
                     <div class="item" onclick="showPop('Course on Computer Concepts (CCC)', '3 Months', 'Beginners & General Public', 'Core Digital Literacy', 'Computer Fundamentals|Operating System Basics|Microsoft Word, Excel & PowerPoint|Internet & Email|Intro to HTML & Web Basics|Practical & Viva', '1700', '1500')">
                         <div class="top-row"><span class="c-name">CCC</span><span class="dur">3 MONTHS</span></div>
                         <span class="preview-text">Govt. standard digital literacy and basics.</span>
-                        <div class="fee-dis">Fee: <span class="fee-strike">₹1700</span><span class="fee-active">₹1500*</span></div>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹1700</span><span class="fee-active">₹1500*</span></div>
                     </div>
                     <div class="item" onclick="showPop('Certificate in Computer Typing', '3 Months', 'Students & Data Entry Ops', 'Speed & Accuracy in Typing', 'English Typing - 45 WPM|Odia Typing - 40 WPM|Practical & Viva', '1700', '1500')">
                         <div class="top-row"><span class="c-name">Computer Typing</span><span class="dur">3 MONTHS</span></div>
                         <span class="preview-text">Master English (45 WPM) and Odia (40 WPM) typing.</span>
-                        <div class="fee-dis">Fee: <span class="fee-strike">₹1500</span><span class="fee-active">₹1200*</span></div>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹1500</span><span class="fee-active">₹1200*</span></div>
                     </div>
                 </div>
 
@@ -150,17 +167,17 @@
                     <div class="item" onclick="showPop('Diploma in Computer Application', '6 Months', 'Job Seekers & Office Staff', 'Comprehensive Office & Digital Mastery', 'Basics of Computer|Windows OS|MS Office|Digital Services|Photoshop & Image Editing|Tally with GST|Practical Work', '3500', '3000')">
                         <div class="top-row"><span class="c-name">DCA</span><span class="dur">6 MONTHS</span></div>
                         <span class="preview-text">MS Office, Digital Services, Design, and Tally GST.</span>
-                        <div class="fee-dis">Fee: <span class="fee-strike">₹3500</span><span class="fee-active">₹3000*</span></div>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹3500</span><span class="fee-active">₹3000*</span></div>
                     </div>
                     <div class="item" onclick="showPop('Post Graduate Diploma in Computer Application', '12 Months', 'Graduates & Tech Professionals', 'Advanced Programming & Management', 'C & Data Structures|DBMS with SQL|Web Designing (HTML, CSS, JS)|Java OOP|Python Basics|Tally ERP with GST|Practical & Viva', '7000', '6000')">
                         <div class="top-row"><span class="c-name">PGDCA</span><span class="dur">12 MONTHS</span></div>
                         <span class="preview-text">Advanced software engineering, programming, and databases.</span>
-                        <div class="fee-dis">Fee: <span class="fee-strike">₹7000</span><span class="fee-active">₹6000*</span></div>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹7000</span><span class="fee-active">₹6000*</span></div>
                     </div>
                     <div class="item" onclick="showPop('Diploma in Web Development', '12 Months', 'Aspiring Web Developers', 'Full Stack Web Mastery', 'HTML & CSS Fundamentals|JavaScript Programming|React.js|Backend with Node.js|MongoDB & MySQL|Git & GitHub|Practical & Viva', '7000', '6000')">
                         <div class="top-row"><span class="c-name">Web Development</span><span class="dur">12 MONTHS</span></div>
                         <span class="preview-text">Master HTML, React, Node.js, and Databases.</span>
-                        <div class="fee-dis">Fee: <span class="fee-strike">₹7000</span><span class="fee-active">₹6000*</span></div>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹7000</span><span class="fee-active">₹6000*</span></div>
                     </div>
                 </div>
 
@@ -172,7 +189,7 @@
                         <div class="fee-display">Fee: <span class="fee-strike">₹1800</span><span class="fee-active">₹1500*</span></div>
                     </div>
                     <div class="item" onclick="showPop('Certificate in Tally', '6 Months', 'Accounting Professionals', 'Financial & Inventory Management', 'Basics of Tally|Company Creation & Ledgers|Inventory Management|Taxation (GST, TDS)|Payroll & Employee Records|Project & Viva', '3500', '3000')">
-                        <div class="top-row"><span class="c-name">Tally</span><span class="dur">6 MONTHS</span></div>
+                        <div class="top-row"><span class="c-name">Tally</span><span class="dur">6 Months</span></div>
                         <span class="preview-text">Master Tally ERP, GST, Payroll, and Accounting.</span>
                         <div class="fee-display">Fee: <span class="fee-strike">₹3500</span><span class="fee-active">₹3000*</span></div>
                     </div>
@@ -294,7 +311,7 @@
                         <div class="app-card-content">
                             <h3><i class="fa-solid fa-mobile-screen-button"></i> Computer Learning Hub </h3>
                             <p>Take your classroom anywhere. Access materials, track attendance, and pay fees seamlessly.</p>
-                            <a href="https://play.google.com/store/apps/details?id=com.excellentinstitute.app" target="_blank" class="play-store-btn-small">
+                            <a href="https://play.google.com/store/apps/details?id=com.excellentinstitute.app" target="_blank" rel="noopener noreferrer" class="play-store-btn-small">
                                 <i class="fa-brands fa-google-play"></i> 
                                 <div class="btn-text-small"><span>Get it on</span><strong>Google Play</strong></div>
                             </a>
@@ -405,6 +422,9 @@
     </div>
 
     <div class="fab-container">
+        <button type="button" class="fab-bubble" onclick="forceHardRefresh(this)" title="Refresh Page">
+            <i class="fa-solid fa-arrows-rotate" style="font-size: 20px; color: var(--brand);"></i>
+        </button>
         <div class="fab-bubble" id="callFab" onclick="toggleCallMenu(event)">
             <svg class="fab-icon call" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
             <div class="call-menu" id="callMenu">
@@ -413,7 +433,7 @@
                 <a href="tel:+916382537955" class="call-link"><i class="fa-solid fa-phone"></i> 6382537955</a>
             </div>
         </div>
-        <a href="https://wa.me/918093499722?text=Hello%20Excellent%20Institute!" target="_blank" class="fab-bubble" title="Chat on WhatsApp">
+        <a href="https://wa.me/918093499722?text=Hello%20Excellent%20Institute!" target="_blank" rel="noopener noreferrer" class="fab-bubble" title="Chat on WhatsApp">
             <svg class="fab-icon wa" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
         </a>
     </div>
@@ -423,14 +443,14 @@
             <h3>📍 Visit Campus</h3>
             <p>Teachers Colony, Rear Side of SBI Bank, Surada, Ganjam, Odisha</p>
             <p class="cert-text">ISO 9001:2015 CERTIFIED • MSME REG: UDYAM-OD-11-0107511</p>
-            <a href="https://maps.app.goo.gl/EwfJjWYEYPiZeLZk6" target="_blank" class="map-btn">NAVIGATE TO CAMPUS</a>
+            <a href="https://maps.app.goo.gl/EwfJjWYEYPiZeLZk6" target="_blank" rel="noopener noreferrer" class="map-btn">NAVIGATE TO CAMPUS</a>
         </div>
         <div class="footer-col social-col text-right">
             <h3>🌐 Connect With Us</h3>
             <div class="social-links">
-                <a href="https://www.instagram.com/excellent._.institute/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@Excellent_Institute" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://www.facebook.com/Excellent.Institute01" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/excellent._.institute/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Excellent_Institute" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.facebook.com/Excellent.Institute01" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i></a>
             </div>
             <p><strong>Call us:</strong> <a href="tel:+918658219398">8658219398</a>, <a href="tel:+916371305069">6371305069</a>, <a href="tel:+916382537955">6382537955</a></p>
         </div>
