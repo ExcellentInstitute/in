@@ -252,6 +252,39 @@ async function startCycle() {
     startCycle(); // Loop endlessly
 }
 
+// ==========================================================================
+// 🔄 FLOATING HARD REFRESH ENGINE (Works in Mobile App & Web Browsers)
+// ==========================================================================
+async function forceHardRefresh(btnElement) {
+    try {
+        if (btnElement) {
+            const icon = btnElement.querySelector('i');
+            if (icon) {
+                icon.classList.add('fa-spin');
+            }
+        }
+
+        // 1. If running inside the Excellent Institute Flutter Mobile App,
+        // trigger the native WebView cache-clear & HighTechLoader reload!
+        if (window.isExcellentMobileApp) {
+            window.location.href = 'eiportal://refresh';
+            return;
+        }
+
+        // 2. If running in a standard mobile/desktop browser, wipe Cache Storage
+        if ('caches' in window) {
+            const cacheNames = await caches.keys();
+            await Promise.all(cacheNames.map(name => caches.delete(name)));
+        }
+    } catch (e) {
+        console.warn("Cache clear warning:", e);
+    }
+
+    // 3. Reload with a fresh cache-busting timestamp
+    const baseUrl = window.location.href.split('?')[0].split('#')[0];
+    window.location.replace(`${baseUrl}?v=${Date.now()}`);
+}
+
 // Trigger animations when the page finishes loading
 window.onload = function() {
     startCycle();
