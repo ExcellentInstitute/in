@@ -286,15 +286,17 @@ async function forceHardRefresh(btnElement) {
 }
 
 // ==========================================================================
-// 📱 EXCELLENT INSTITUTE SMART PLAY STORE APP ENGINE
-// Pre-loaded with verified Play Store metadata + Live Background Sync
+// 📱 EXCELLENT INSTITUTE SMART PLAY STORE APP ENGINE & #ADMIN CMS
+// Pre-loaded with verified Play Store metadata + Live Firebase Admin Sync
 // ==========================================================================
 const DEV_STORE_URL = "https://play.google.com/store/apps/dev?id=6460003774837792893";
 
-const instituteAppsData = [
+// Default Apps Catalog (Python Compiler is now LIVE!)
+const defaultAppsData = [
     {
         id: "com.excellentinstitute.app",
         title: "Computer Learning Hub",
+        shortSub: "Student Portal & Notes • Live",
         status: "live",
         category: "Education • Student Portal",
         version: "v1.0.27",
@@ -308,6 +310,7 @@ const instituteAppsData = [
     {
         id: "com.excellentinstitute.ccompiler",
         title: "C Compiler & IDE",
+        shortSub: "Offline C Engine • Live",
         status: "live",
         category: "Education • Offline Programming IDE",
         version: "v1.0",
@@ -319,34 +322,37 @@ const instituteAppsData = [
         features: ["100% Offline C Engine", "Interactive STDIN Console", "100+ Code Vault Programs", "Smart Typo Checker", "Direct .c File Save"]
     },
     {
+        id: "com.excellentinstitute.pythoncompiler",
+        title: "Python Compiler",
+        shortSub: "Offline Python 3 IDE • Live",
+        status: "live",
+        category: "Education • Offline Programming IDE",
+        version: "v1.0",
+        updated: "Nov 2026",
+        icon: "fa-brands fa-python",
+        iconBg: "linear-gradient(135deg, #2563eb, #eab308)",
+        playUrl: "https://play.google.com/store/apps/details?id=com.excellentinstitute.pythoncompiler",
+        description: "Fast, zero-configuration Python 3.11 offline coding environment and Data Science studio. Run Python scripts, NumPy, Pandas, Matplotlib visual graphs, AI/ML lab practicals, and install PIP packages directly on Android.",
+        features: ["Offline CPython 3.11", "Direct PIP Installer", "Visual Graph & Plot Viewer", "50+ AI/ML & Python Vault", "Smart Code Chips"]
+    },
+    {
         id: "com.excellentinstitute.javacompiler",
         title: "Java Compiler: Offline IDE",
+        shortSub: "Offline Java Engine",
         status: "upcoming",
         category: "Upcoming • Offline Programming IDE",
         version: "In Development",
         updated: "Coming Soon",
         icon: "fa-brands fa-java",
         iconBg: "linear-gradient(135deg, #ea580c, #dc2626)",
-        playUrl: DEV_STORE_URL,
+        playUrl: "https://play.google.com/store/apps/details?id=com.excellentinstitute.javacompiler",
         description: "Complete offline Core Java & Object-Oriented Programming workspace. Designed for BCA, PGDCA, and software aspirants to write, compile, and execute multi-class Java programs locally on Android with smart syntax assistance.",
         features: ["Offline JDK Runner", "OOP Class Templates", "Smart Auto-Complete", "Interactive Console"]
     },
     {
-        id: "com.excellentinstitute.pythoncompiler",
-        title: "Python Compiler Offline IDE",
-        status: "upcoming",
-        category: "Upcoming • Offline Programming IDE",
-        version: "In Development",
-        updated: "Coming Soon",
-        icon: "fa-brands fa-python",
-        iconBg: "linear-gradient(135deg, #2563eb, #eab308)",
-        playUrl: DEV_STORE_URL,
-        description: "Fast, zero-configuration Python 3 offline coding environment for students and developers. Practice logic, automation scripts, data structures, and academic lab assignments anywhere without an internet connection.",
-        features: ["Offline Python 3 Runtime", "Interactive REPL Shell", "Indentation Helper Keys", "Built-in Lab Examples"]
-    },
-    {
         id: "com.excellentinstitute.dbmscompiler",
         title: "DBMS Compiler Offline IDE",
+        shortSub: "Offline SQL Sandbox",
         status: "upcoming",
         category: "Upcoming • Database & SQL Sandbox",
         version: "In Development",
@@ -359,10 +365,129 @@ const instituteAppsData = [
     }
 ];
 
+const defaultGeneralConfig = {
+    tagline: "EMPOWERING MINDS • ELEVATING CAREERS • SINCE 2026",
+    tickerHeadline: "📢 ADMISSIONS OPEN FOR 8TH & ABOVE STUDENTS!",
+    tickerCourses: "BCC, CCC, CMS, Computer Typing, DCA, PGDCA, Web Development, Graphic Design, Tally, Core Java",
+    sessionBadge: "Session 2026",
+    address: "Teachers Colony, Rear Side of SBI Bank, Surada, Ganjam, Odisha",
+    phone1: "8658219398",
+    phone2: "6371305069",
+    phone3: "6382537955",
+    whatsapp: "918093499722"
+};
+
+const defaultTeamData = [
+    {
+        slot: 1,
+        active: true,
+        initials: "PK",
+        bg: "#0041ff",
+        textColor: "#ffffff",
+        img: "images/pradeep.jpg",
+        name: "Pradeep Kumar Behera",
+        role: "Founder & Managing Director",
+        bio: "Driving the strategic vision of Excellent Institute, focusing on accessible technology education, system administration, and modern operational management."
+    },
+    {
+        slot: 2,
+        active: true,
+        initials: "AG",
+        bg: "#0a0f1d",
+        textColor: "#ffffff",
+        img: "images/Anil.jpg",
+        name: "Anil Gouda",
+        role: "Co-Founder & Academic Lead",
+        bio: "Spearheading curriculum design and student success initiatives to ensure practical, industry-relevant training and seamless course delivery."
+    },
+    {
+        slot: 3,
+        active: false, // Rajesh Sahoo deactivated by default; reactivate or replace anytime in #admin
+        initials: "RS",
+        bg: "#00f2ff",
+        textColor: "#0a0f1d",
+        img: "images/rajesh.jpg",
+        name: "Rajesh Sahoo",
+        role: "Co-Founder & Strategy Lead",
+        bio: "Overseeing student relations, digital communications, internal workflows, and institutional growth strategies."
+    },
+    {
+        slot: 4,
+        active: true,
+        initials: "SK",
+        bg: "#0041ff",
+        textColor: "#ffffff",
+        img: "images/sandeep.jpg",
+        name: "Sandeep Kumar Behera",
+        role: "Co-Founder & Technical Director",
+        bio: "Leading the institute's IT infrastructure, including advanced Computing network deployments and seamless hardware lab operations."
+    }
+];
+
+const defaultCoursesData = [
+    { id: "bcc", track: 1, shortName: "BCC", fullTitle: "Basic Computer Course (BCC)", dur: "3 Months", who: "Beginners & Students", why: "Foundational Digital Literacy", preview: "Essential computing, MS Office, and Internet skills.", learn: "Computer Fundamentals|Operating System Basics|MS Word|MS Excel|MS PowerPoint|Internet & Email|Practical & Viva", origFee: "1700", discFee: "1500" },
+    { id: "ccc", track: 1, shortName: "CCC", fullTitle: "Course on Computer Concepts (CCC)", dur: "3 Months", who: "Beginners & General Public", why: "Core Digital Literacy", preview: "Govt. standard digital literacy and basics.", learn: "Computer Fundamentals|Operating System Basics|Microsoft Word, Excel & PowerPoint|Internet & Email|Intro to HTML & Web Basics|Practical & Viva", origFee: "1700", discFee: "1500" },
+    { id: "typing", track: 1, shortName: "Computer Typing", fullTitle: "Certificate in Computer Typing", dur: "3 Months", who: "Students & Data Entry Ops", why: "Speed & Accuracy in Typing", preview: "Master English (45 WPM) and Odia (40 WPM) typing.", learn: "English Typing - 45 WPM|Odia Typing - 40 WPM|Practical & Viva", origFee: "1500", discFee: "1200" },
+    { id: "dca", track: 2, shortName: "DCA", fullTitle: "Diploma in Computer Application", dur: "6 Months", who: "Job Seekers & Office Staff", why: "Comprehensive Office & Digital Mastery", preview: "MS Office, Digital Services, Design, and Tally GST.", learn: "Basics of Computer|Windows OS|MS Office|Digital Services|Photoshop & Image Editing|Tally with GST|Practical Work", origFee: "3500", discFee: "3000" },
+    { id: "pgdca", track: 2, shortName: "PGDCA", fullTitle: "Post Graduate Diploma in Computer Application", dur: "12 Months", who: "Graduates & Tech Professionals", why: "Advanced Programming & Management", preview: "Advanced software engineering, programming, and databases.", learn: "C & Data Structures|DBMS with SQL|Web Designing (HTML, CSS, JS)|Java OOP|Python Basics|Tally ERP with GST|Practical & Viva", origFee: "7000", discFee: "6000" },
+    { id: "webdev", track: 2, shortName: "Web Development", fullTitle: "Diploma in Web Development", dur: "12 Months", who: "Aspiring Web Developers", why: "Full Stack Web Mastery", preview: "Master HTML, React, Node.js, and Databases.", learn: "HTML & CSS Fundamentals|JavaScript Programming|React.js|Backend with Node.js|MongoDB & MySQL|Git & GitHub|Practical & Viva", origFee: "7000", discFee: "6000" },
+    { id: "graphic", track: 3, shortName: "Graphic Design", fullTitle: "Certificate in Graphic Design", dur: "3 Months", who: "Creatives & Marketers", why: "Brand Identity Creation", preview: "Master Adobe Creative Suite and CorelDraw.", learn: "Introduction to Graphic Design|Adobe Photoshop Basics|CorelDRAW Techniques|Typography & Color Theory|Layout Design|Practical + Viva", origFee: "1800", discFee: "1500" },
+    { id: "tally", track: 3, shortName: "Tally", fullTitle: "Certificate in Tally", dur: "6 Months", who: "Accounting Professionals", why: "Financial & Inventory Management", preview: "Master Tally ERP, GST, Payroll, and Accounting.", learn: "Basics of Tally|Company Creation & Ledgers|Inventory Management|Taxation (GST, TDS)|Payroll & Employee Records|Project & Viva", origFee: "3500", discFee: "3000" },
+    { id: "java", track: 3, shortName: "Core Java", fullTitle: "Core Java", dur: "3 Months", who: "Software Aspirants", why: "Backend Dev Foundation", preview: "Learn OOPs, logic, and core Java concepts.", learn: "Object-Oriented Programming|Java Control Structures|Classes & Methods|Inheritance & Polymorphism|Exception Handling|Practical & Viva", origFee: "2000", discFee: "1500" }
+];
+
+let instituteAppsData = JSON.parse(JSON.stringify(defaultAppsData));
+let generalSiteConfig = JSON.parse(JSON.stringify(defaultGeneralConfig));
+let teamMembersData = JSON.parse(JSON.stringify(defaultTeamData));
+let coursesSiteData = JSON.parse(JSON.stringify(defaultCoursesData));
 let currentAppFilter = 'all';
+let isAdminUnlocked = sessionStorage.getItem('ei_admin_unlocked') === 'true';
+let currentAdminTab = 'apps';
+
+// Update all live/upcoming counters, badges, and the Student Portal sidebar list
+function updateAllAppCountersAndSidebar() {
+    const totalCount = instituteAppsData.length;
+    const liveApps = instituteAppsData.filter(a => a.status === 'live');
+    const liveCount = liveApps.length;
+    const upcomingCount = totalCount - liveCount;
+
+    const setTxt = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = val;
+    };
+
+    setTxt('stat-total-apps', totalCount);
+    setTxt('stat-live-apps', liveCount);
+    setTxt('stat-upcoming-apps', upcomingCount);
+    setTxt('pill-all-apps', totalCount);
+    setTxt('pill-live-apps', liveCount);
+    setTxt('pill-upcoming-apps', upcomingCount);
+    setTxt('portal-app-pill-text', `${liveCount} LIVE • ${upcomingCount} UPCOMING`);
+    setTxt('mobile-nav-apps', `Our Apps (${liveCount} Live • ${upcomingCount} Upcoming)`);
+
+    const navBadge = document.querySelector('.nav-app-badge');
+    if (navBadge) navBadge.innerText = totalCount;
+
+    // Dynamically render all LIVE apps inside the Student Portal Sidebar
+    const miniList = document.getElementById('portal-mini-app-list');
+    if (miniList) {
+        miniList.innerHTML = liveApps.map(app => `
+            <a href="${app.playUrl}" target="_blank" rel="noopener noreferrer" class="portal-mini-app-item">
+                <div class="mini-app-icon" style="background: ${app.iconBg};"><i class="${app.icon}"></i></div>
+                <div class="mini-app-info">
+                    <strong>${app.title}</strong>
+                    <span>${app.shortSub || 'Live on Google Play'}</span>
+                </div>
+                <i class="fa-brands fa-google-play mini-play-icon"></i>
+            </a>
+        `).join('');
+    }
+}
 
 function renderInstituteApps(filter = 'all') {
     currentAppFilter = filter;
+    updateAllAppCountersAndSidebar();
+
     const grid = document.getElementById('institute-apps-grid');
     if (!grid) return;
 
@@ -374,6 +499,7 @@ function renderInstituteApps(filter = 'all') {
     grid.innerHTML = filtered.map(app => {
         const isLive = app.status === 'live';
         const cardClickAttr = isLive ? `onclick="window.open('${app.playUrl}', '_blank', 'noopener')"` : '';
+        const featuresList = Array.isArray(app.features) ? app.features : String(app.features || '').split(',').map(s => s.trim()).filter(Boolean);
         
         return `
             <div class="inst-app-card ${isLive ? 'is-live' : 'is-upcoming'}" ${cardClickAttr}>
@@ -395,7 +521,7 @@ function renderInstituteApps(filter = 'all') {
                     <p class="app-desc-text" id="desc-${app.id}">${app.description}</p>
 
                     <ul class="app-features-list">
-                        ${app.features.map(f => `<li><i class="fa-solid fa-check"></i> ${f}</li>`).join('')}
+                        ${featuresList.map(f => `<li><i class="fa-solid fa-check"></i> ${f}</li>`).join('')}
                     </ul>
                 </div>
 
@@ -425,6 +551,434 @@ function filterInstituteApps(filterType, btnEl) {
     renderInstituteApps(filterType);
 }
 
+// Apply General, Team, and Course settings to the live DOM
+function applyLiveSiteConfigToDOM() {
+    // 1. Tagline & Session Badge
+    const taglineEl = document.querySelector('.tagline');
+    if (taglineEl && generalSiteConfig.tagline) taglineEl.innerText = generalSiteConfig.tagline;
+
+    const badgeEl = document.querySelector('.form-header .badge');
+    if (badgeEl && generalSiteConfig.sessionBadge) badgeEl.innerText = generalSiteConfig.sessionBadge;
+
+    // 2. Train Ticker
+    const tickerTrack = document.querySelector('.ticker-track');
+    if (tickerTrack && generalSiteConfig.tickerHeadline && generalSiteConfig.tickerCourses) {
+        const cars = generalSiteConfig.tickerCourses.split(',').map(c => c.trim()).filter(Boolean);
+        const carsHtml = cars.map((c, idx) => `<span class="train-car">${c}</span>${idx < cars.length - 1 ? '<span class="train-link">▬</span>' : ''}`).join('');
+        const singleTrain = `
+            <div class="train-msg">
+                <span style="font-size: 24px;">🚂</span>
+                <span class="highlight-text">${generalSiteConfig.tickerHeadline}</span>
+                ${carsHtml} 🚃
+            </div>
+        `;
+        tickerTrack.innerHTML = singleTrain + singleTrain;
+    }
+
+    // 3. Leadership Team Grid (Only renders active members, keeping Rajesh hidden unless reactivated)
+    const teamGrid = document.getElementById('team-grid-container') || document.querySelector('.team-grid');
+    if (teamGrid && Array.isArray(teamMembersData)) {
+        const activeMembers = teamMembersData.filter(m => m.active);
+        teamGrid.innerHTML = activeMembers.map((m, idx) => `
+            <div class="team-card member-${idx + 1}">
+                <div class="flip-avatar">
+                    <div class="flip-avatar-inner">
+                        <div class="flip-avatar-front" style="background: ${m.bg}; color: ${m.textColor || '#ffffff'};">${m.initials}</div>
+                        <div class="flip-avatar-back">
+                            <img src="${m.img}" alt="${m.name}">
+                        </div>
+                    </div>
+                </div>
+                <h4>${m.name}</h4>
+                <span class="team-role">${m.role}</span>
+                <p>${m.bio}</p>
+            </div>
+        `).join('');
+    }
+
+    // 4. Courses & Fees Grid
+    const coursesMain = document.querySelector('#view-courses .main-content');
+    if (coursesMain && Array.isArray(coursesSiteData)) {
+        const trackTitles = {
+            1: "01. Foundation Tracks",
+            2: "02. Professional Diplomas",
+            3: "03. Specialized Programs"
+        };
+        coursesMain.innerHTML = [1, 2, 3].map(trackNum => {
+            const trackCourses = coursesSiteData.filter(c => Number(c.track) === trackNum);
+            const itemsHtml = trackCourses.map(c => {
+                const safeTitle = c.fullTitle.replace(/'/g, "\\'");
+                const safeDur = c.dur.replace(/'/g, "\\'");
+                const safeWho = c.who.replace(/'/g, "\\'");
+                const safeWhy = c.why.replace(/'/g, "\\'");
+                const safeLearn = c.learn.replace(/'/g, "\\'");
+                return `
+                    <div class="item" onclick="showPop('${safeTitle}', '${safeDur}', '${safeWho}', '${safeWhy}', '${safeLearn}', '${c.origFee}', '${c.discFee}')">
+                        <div class="top-row"><span class="c-name">${c.shortName}</span><span class="dur">${c.dur.toUpperCase()}</span></div>
+                        <span class="preview-text">${c.preview}</span>
+                        <div class="fee-display">Fee: <span class="fee-strike">₹${c.origFee}</span><span class="fee-active">₹${c.discFee}*</span></div>
+                    </div>
+                `;
+            }).join('');
+            return `
+                <div class="card">
+                    <div class="card-header">${trackTitles[trackNum]}</div>
+                    ${itemsHtml}
+                </div>
+            `;
+        }).join('');
+    }
+}
+
+// Connect to Firebase `site_config` for real-time synchronization
+function initRealtimeSiteConfigSync() {
+    if (typeof firebase === 'undefined' || !firebase.apps.length) return;
+    try {
+        firebase.database().ref('site_config').on('value', snapshot => {
+            const data = snapshot.val();
+            if (!data) return;
+
+            if (Array.isArray(data.apps)) instituteAppsData = data.apps;
+            if (data.general) generalSiteConfig = { ...defaultGeneralConfig, ...data.general };
+            if (Array.isArray(data.team)) teamMembersData = data.team;
+            if (Array.isArray(data.courses)) coursesSiteData = data.courses;
+
+            renderInstituteApps(currentAppFilter);
+            applyLiveSiteConfigToDOM();
+
+            if (isAdminUnlocked && window.location.hash === '#admin') {
+                renderAdminTabContent(currentAdminTab);
+            }
+        });
+    } catch (e) {
+        console.warn("Realtime config sync fallback:", e);
+    }
+}
+
+// ==========================================================================
+// 🔐 #ADMIN ROUTER, PASSWORD VERIFICATION & CONTROL PANEL
+// ==========================================================================
+function checkAdminHashRoute() {
+    if (window.location.hash === '#admin') {
+        switchPage('admin');
+        const lockScreen = document.getElementById('admin-lock-screen');
+        const dashPanel = document.getElementById('admin-dashboard-panel');
+        if (isAdminUnlocked) {
+            lockScreen?.classList.add('hidden');
+            dashPanel?.classList.remove('hidden');
+            renderAdminTabContent(currentAdminTab);
+        } else {
+            lockScreen?.classList.remove('hidden');
+            dashPanel?.classList.add('hidden');
+        }
+    }
+}
+
+window.addEventListener('hashchange', checkAdminHashRoute);
+
+// Password check inside script.js (verifies 'admin@123' via encoded keycode check)
+function verifyAdminLogin(event) {
+    event.preventDefault();
+    const inputEl = document.getElementById('admin-pass-input');
+    const errEl = document.getElementById('admin-auth-error');
+    const entered = inputEl ? inputEl.value : '';
+
+    // Encoded verification for "admin@123"
+    const targetCodes = [97, 100, 109, 105, 110, 64, 49, 50, 51];
+    const isMatch = entered.length === targetCodes.length &&
+        entered.split('').every((ch, i) => ch.charCodeAt(0) === targetCodes[i]);
+
+    if (isMatch) {
+        isAdminUnlocked = true;
+        sessionStorage.setItem('ei_admin_unlocked', 'true');
+        errEl?.classList.add('hidden');
+        if (inputEl) inputEl.value = '';
+        checkAdminHashRoute();
+    } else {
+        errEl?.classList.remove('hidden');
+    }
+}
+
+function logoutAdmin() {
+    isAdminUnlocked = false;
+    sessionStorage.removeItem('ei_admin_unlocked');
+    window.location.hash = '';
+    switchPage('home');
+}
+
+function exitAdminMode() {
+    window.location.hash = '';
+    switchPage('home');
+}
+
+function switchAdminTab(tabName, btnEl) {
+    currentAdminTab = tabName;
+    document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    renderAdminTabContent(tabName);
+}
+
+async function saveAdminConfigToFirebase(sectionLabel) {
+    try {
+        await firebase.database().ref('site_config').set({
+            apps: instituteAppsData,
+            general: generalSiteConfig,
+            team: teamMembersData,
+            courses: coursesSiteData,
+            lastUpdated: new Date().toISOString()
+        });
+        renderInstituteApps(currentAppFilter);
+        applyLiveSiteConfigToDOM();
+        alert(`✅ ${sectionLabel} saved and published live!`);
+    } catch (err) {
+        alert("⚠️ Saved locally in session, but Firebase write failed. Check database rules or internet.");
+        console.error(err);
+    }
+}
+
+function renderAdminTabContent(tab) {
+    const box = document.getElementById('admin-tab-content');
+    if (!box) return;
+
+    if (tab === 'apps') {
+        box.innerHTML = instituteAppsData.map((app, idx) => {
+            const isLive = app.status === 'live';
+            return `
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h3><i class="${app.icon}" style="color:var(--brand); margin-right:8px;"></i> ${app.title} <small style="color:#64748b; font-family:monospace;">(${app.id})</small></h3>
+                        <button type="button" class="admin-status-toggle ${isLive ? 'is-live' : 'is-upcoming'}" onclick="toggleAppLiveStatus(${idx})">
+                            ${isLive ? '🟢 LIVE ON PLAY STORE (Click to set Upcoming)' : '🟡 UPCOMING (Click to make LIVE)'}
+                        </button>
+                    </div>
+                    <div class="admin-grid-3">
+                        <div class="admin-field">
+                            <label>App Title</label>
+                            <input type="text" value="${app.title}" onchange="instituteAppsData[${idx}].title = this.value">
+                        </div>
+                        <div class="admin-field">
+                            <label>Version (e.g. v1.0)</label>
+                            <input type="text" value="${app.version}" onchange="instituteAppsData[${idx}].version = this.value">
+                        </div>
+                        <div class="admin-field">
+                            <label>Updated Label (e.g. Nov 2026)</label>
+                            <input type="text" value="${app.updated}" onchange="instituteAppsData[${idx}].updated = this.value">
+                        </div>
+                    </div>
+                    <div class="admin-grid-2">
+                        <div class="admin-field">
+                            <label>Google Play Store URL</label>
+                            <input type="url" value="${app.playUrl}" onchange="instituteAppsData[${idx}].playUrl = this.value">
+                        </div>
+                        <div class="admin-field">
+                            <label>Category Subtitle</label>
+                            <input type="text" value="${app.category}" onchange="instituteAppsData[${idx}].category = this.value">
+                        </div>
+                    </div>
+                    <div class="admin-field">
+                        <label>App Description</label>
+                        <textarea onchange="instituteAppsData[${idx}].description = this.value">${app.description}</textarea>
+                    </div>
+                </div>
+            `;
+        }).join('') + `
+            <button type="button" class="admin-btn-primary" style="align-self:flex-start; padding:15px 28px; font-size:15px;" onclick="saveAdminConfigToFirebase('Apps Ecosystem')">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Save & Publish All App Changes
+            </button>
+        `;
+    } else if (tab === 'general') {
+        box.innerHTML = `
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3>📢 Homepage Banner, Train Ticker & Portal Session</h3>
+                </div>
+                <div class="admin-grid-2">
+                    <div class="admin-field">
+                        <label>Header Neon Tagline</label>
+                        <input type="text" value="${generalSiteConfig.tagline}" oninput="generalSiteConfig.tagline = this.value">
+                    </div>
+                    <div class="admin-field">
+                        <label>Portal Session Badge</label>
+                        <input type="text" value="${generalSiteConfig.sessionBadge}" oninput="generalSiteConfig.sessionBadge = this.value">
+                    </div>
+                </div>
+                <div class="admin-field">
+                    <label>Marquee Train Headline</label>
+                    <input type="text" value="${generalSiteConfig.tickerHeadline}" oninput="generalSiteConfig.tickerHeadline = this.value">
+                </div>
+                <div class="admin-field">
+                    <label>Marquee Train Course Cars (Comma Separated)</label>
+                    <input type="text" value="${generalSiteConfig.tickerCourses}" oninput="generalSiteConfig.tickerCourses = this.value">
+                </div>
+                <button type="button" class="admin-btn-primary" onclick="saveAdminConfigToFirebase('Banner & Ticker')">
+                    <i class="fa-solid fa-floppy-disk"></i> Save Banner & Ticker
+                </button>
+            </div>
+        `;
+    } else if (tab === 'courses') {
+        box.innerHTML = coursesSiteData.map((c, idx) => `
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3>🎓 ${c.shortName} — ${c.fullTitle}</h3>
+                </div>
+                <div class="admin-grid-3">
+                    <div class="admin-field">
+                        <label>Duration</label>
+                        <input type="text" value="${c.dur}" onchange="coursesSiteData[${idx}].dur = this.value">
+                    </div>
+                    <div class="admin-field">
+                        <label>Original Strike Fee (₹)</label>
+                        <input type="text" value="${c.origFee}" onchange="coursesSiteData[${idx}].origFee = this.value">
+                    </div>
+                    <div class="admin-field">
+                        <label>Discounted Active Fee (₹)</label>
+                        <input type="text" value="${c.discFee}" onchange="coursesSiteData[${idx}].discFee = this.value">
+                    </div>
+                </div>
+                <div class="admin-field">
+                    <label>Card Preview Line</label>
+                    <input type="text" value="${c.preview}" onchange="coursesSiteData[${idx}].preview = this.value">
+                </div>
+                <div class="admin-field">
+                    <label>Modal Syllabus Topics (Separated by | pipe)</label>
+                    <input type="text" value="${c.learn}" onchange="coursesSiteData[${idx}].learn = this.value">
+                </div>
+            </div>
+        `).join('') + `
+            <button type="button" class="admin-btn-primary" style="align-self:flex-start; padding:15px 28px; font-size:15px;" onclick="saveAdminConfigToFirebase('Courses & Fees')">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Save All Course & Fee Updates
+            </button>
+        `;
+    } else if (tab === 'team') {
+        box.innerHTML = teamMembersData.map((m, idx) => `
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3>👤 Slot ${m.slot}: ${m.name} (${m.initials})</h3>
+                    <button type="button" class="admin-status-toggle ${m.active ? 'is-live' : 'is-upcoming'}" onclick="toggleTeamMemberActive(${idx})">
+                        ${m.active ? '🟢 VISIBLE ON SITE (Click to Hide)' : '🔴 HIDDEN / COMMENTED OUT (Click to Activate)'}
+                    </button>
+                </div>
+                <div class="admin-grid-3">
+                    <div class="admin-field">
+                        <label>Full Name</label>
+                        <input type="text" value="${m.name}" onchange="teamMembersData[${idx}].name = this.value">
+                    </div>
+                    <div class="admin-field">
+                        <label>Avatar Initials Letter (e.g. PK)</label>
+                        <input type="text" maxlength="3" value="${m.initials}" onchange="teamMembersData[${idx}].initials = this.value">
+                    </div>
+                    <div class="admin-field">
+                        <label>Role / Designation</label>
+                        <input type="text" value="${m.role}" onchange="teamMembersData[${idx}].role = this.value">
+                    </div>
+                </div>
+                <div class="admin-field">
+                    <label>Image Path (e.g. images/pradeep.jpg)</label>
+                    <input type="text" value="${m.img}" onchange="teamMembersData[${idx}].img = this.value">
+                </div>
+                <div class="admin-field">
+                    <label>Short Bio</label>
+                    <textarea onchange="teamMembersData[${idx}].bio = this.value">${m.bio}</textarea>
+                </div>
+            </div>
+        `).join('') + `
+            <button type="button" class="admin-btn-primary" style="align-self:flex-start; padding:15px 28px; font-size:15px;" onclick="saveAdminConfigToFirebase('Leadership Team')">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Save Leadership Team Changes
+            </button>
+        `;
+    } else if (tab === 'ads') {
+        box.innerHTML = `<div class="admin-card"><p>Loading live AdMob Kill-Switch states from Firebase <code>/settings</code>...</p></div>`;
+        firebase.database().ref('settings').once('value').then(snap => {
+            const s = snap.val() || {};
+            const keys = [
+                { k: 'pcBannerAds', label: '🐍 Python IDE — Workspace Banner Ad' },
+                { k: 'pcInterstitialAds', label: '🐍 Python IDE — Vault Interstitial Ad' },
+                { k: 'pcVaultBannerAds', label: '🐍 Python IDE — Vault Footer Banner Ad' },
+                { k: 'jcBannerAds', label: '☕ Java IDE — Workspace Banner Ad' },
+                { k: 'jcInterstitialAds', label: '☕ Java IDE — Vault Interstitial Ad' },
+                { k: 'jcVaultBannerAds', label: '☕ Java IDE — Vault Footer Banner Ad' }
+            ];
+            box.innerHTML = `
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h3>💰 Remote AdMob Kill-Switches (Firebase /settings)</h3>
+                    </div>
+                    <div class="admin-grid-2">
+                        ${keys.map(item => {
+                            const enabled = s[item.k] !== false;
+                            return `
+                                <div style="display:flex; justify-content:space-between; align-items:center; padding:14px; background:var(--light-bg); border-radius:12px; border:1px solid var(--border);">
+                                    <strong style="font-size:13.5px; color:var(--navy);">${item.label}</strong>
+                                    <button type="button" class="admin-status-toggle ${enabled ? 'is-live' : 'is-upcoming'}" onclick="toggleFirebaseAdSwitch('${item.k}', ${!enabled})">
+                                        ${enabled ? '🟢 ADS ON' : '🔴 ADS OFF'}
+                                    </button>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        });
+    } else if (tab === 'leads') {
+        box.innerHTML = `<div class="admin-card"><p>Loading student registrations from Firebase...</p></div>`;
+        firebase.database().ref('public_registrations').limitToLast(25).once('value').then(snap => {
+            const raw = snap.val() || {};
+            const list = Object.values(raw).reverse();
+            box.innerHTML = `
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h3>📋 Latest Student Portal Registrations (${list.length})</h3>
+                    </div>
+                    ${list.length === 0 ? '<p>No registrations found yet.</p>' : list.map(r => `
+                        <div style="padding:14px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+                            <div>
+                                <strong style="color:var(--navy); font-size:15px;">${r.name}</strong> • <span style="color:var(--brand); font-weight:900;">${r.course}</span>
+                                <div style="font-size:12px; color:#64748b;">Father: ${r.fatherName} | Date: ${new Date(r.date).toLocaleDateString()}</div>
+                            </div>
+                            <a href="tel:${r.phone}" class="admin-btn-primary" style="text-decoration:none;"><i class="fa-solid fa-phone"></i> ${r.phone}</a>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        });
+    }
+}
+
+function toggleAppLiveStatus(idx) {
+    const app = instituteAppsData[idx];
+    if (!app) return;
+    if (app.status === 'live') {
+        app.status = 'upcoming';
+        app.category = 'Upcoming • Offline Programming IDE';
+        app.version = 'In Development';
+        app.updated = 'Coming Soon';
+    } else {
+        app.status = 'live';
+        app.category = 'Education • Offline Programming IDE';
+        if (app.version === 'In Development') app.version = 'v1.0';
+        if (app.updated === 'Coming Soon') app.updated = 'Nov 2026';
+        if (app.playUrl === DEV_STORE_URL) {
+            app.playUrl = `https://play.google.com/store/apps/details?id=${app.id}`;
+        }
+    }
+    renderAdminTabContent('apps');
+}
+
+function toggleTeamMemberActive(idx) {
+    if (!teamMembersData[idx]) return;
+    teamMembersData[idx].active = !teamMembersData[idx].active;
+    renderAdminTabContent('team');
+}
+
+async function toggleFirebaseAdSwitch(key, newState) {
+    try {
+        await firebase.database().ref('settings/' + key).set(newState);
+        renderAdminTabContent('ads');
+    } catch (e) {
+        alert("Failed to toggle ad switch in Firebase.");
+    }
+}
+
 // Smart Background Sync: Fetches live OpenGraph description/title from Google Play URLs via CORS proxy
 async function syncPlayStoreMetadata() {
     const syncBadge = document.getElementById('play-sync-status');
@@ -447,7 +1001,6 @@ async function syncPlayStoreMetadata() {
             const rawDesc = itemDesc || ogDesc;
 
             if (rawDesc && rawDesc.length > 40) {
-                // Clean up and format live Play Store description snippet
                 const cleanSnippet = rawDesc.replace(/\s+/g, ' ').trim();
                 app.description = cleanSnippet.length > 260 ? cleanSnippet.substring(0, 257) + '...' : cleanSnippet;
                 const descEl = document.getElementById(`desc-${app.id}`);
@@ -459,16 +1012,18 @@ async function syncPlayStoreMetadata() {
             syncBadge.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#34d399;"></i> Live Play Store Metadata Verified';
         }
     } catch (err) {
-        // Fallback already has exact verified Play Store descriptions
         if (syncBadge) {
             syncBadge.innerHTML = '<i class="fa-solid fa-shield-check" style="color:#34d399;"></i> Official Play Store Catalog Loaded';
         }
     }
 }
 
-// Trigger animations and App Ecosystem rendering when the page finishes loading
+// Trigger animations, App Ecosystem rendering, Firebase live config, and #admin routing on load
 window.onload = function() {
     startCycle();
     renderInstituteApps('all');
+    applyLiveSiteConfigToDOM();
+    initRealtimeSiteConfigSync();
     syncPlayStoreMetadata();
+    checkAdminHashRoute();
 };
